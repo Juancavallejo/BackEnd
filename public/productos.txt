@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Camisa",
+    "price": 300,
+    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+  },
+  {
+    "id": 2,
+    "title": "jean",
+    "price": 350,
+    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+  },
+  {
+    "id": 3,
+    "name": "Chaqueta",
+    "price": 700,
+    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+  },
+  {
+    "id": 4,
+    "name": "Sudadera",
+    "price": 320,
+    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+  },
+  {
+    "id": 5,
+    "name": "Gorra",
+    "price": 220,
+    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+  }
+]
