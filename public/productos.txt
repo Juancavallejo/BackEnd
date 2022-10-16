@@ -3,30 +3,50 @@
     "id": 1,
     "title": "Camisa",
     "price": 300,
-    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+    "thumbnail": "https://i.linio.com/p/840df4d6729305b627e843508bc810e7-product.webp"
   },
   {
     "id": 2,
     "title": "jean",
     "price": 350,
-    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+    "thumbnail": "https://i.linio.com/p/49481c8b2b89accad291a7fa60e78f37-product.webp"
   },
   {
     "id": 3,
-    "name": "Chaqueta",
+    "title": "Chaqueta",
     "price": 700,
     "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
   },
   {
     "id": 4,
-    "name": "Sudadera",
+    "title": "Jogger",
     "price": 320,
-    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+    "thumbnail": "https://i.linio.com/p/6b87342cce8ace2fe49f5d4199a41e45-product.webp"
   },
   {
     "id": 5,
-    "name": "Gorra",
+    "title": "Gorra",
     "price": 220,
-    "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"
+    "thumbnail": "https://i.linio.com/p/1c3be0ecef49802a9a9a394c892df896-product.webp"
+  },
+  {
+    "id": 6,
+    "title": "falda",
+    "price": "400",
+    "thumbnail": "https://i.linio.com/p/bf5688435f04ba971dbd51e4ef27a612-product.webp"
+
+  },
+  {
+    "id": 7,
+    "title": "vestido",
+    "price": "600",
+    "thumbnail": "https://i.linio.com/p/4001ba795846bd7062fcfea5a12df915-product.webp"
+
+  },
+  {
+    "id": 8,
+    "title": "bolso",
+    "price": "450",
+    "thumbnail": "https://i.linio.com/p/a81640db73aa9bb9d4730e4a2be0c7f3-product.webp"
   }
 ]

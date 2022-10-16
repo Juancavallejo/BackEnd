@@ -4,15 +4,31 @@ const productsRouter = express.Router ();
 const Contenedor = require ("../ClassContenedor")
 const listaItems = new Contenedor ("productos.txt")
 
-productsRouter.get ("/", async (req, res) => {
-    const allProductos = await listaItems.getAll()
-    if (allProductos) {
-        res.status(200).send (allProductos) 
+productsRouter.get ("/", async (req,res) => {
+    res.status(200).render ("home")
+})
+
+productsRouter.get ("/products", async (req, res) => {
+    const allProducts = await listaItems.getAll()
+    if (allProducts) {
+        res.status(200).render ("products", {
+            allProducts: allProducts
+        })
     } else {
-        res.status(404).send ("No es posible cargar los productos de la pagina")
+        res.status(404).send (`Lo sentimos, no hay productos para mostrar`)
     }
-    
-});
+})
+
+//Obtener todos los productos guardados
+
+productsRouter.get ("./partials/products", async (req, res) => {
+    const allProducts = await listaItems.getAll()
+    res.render ("products", {
+        allProducts: allProducts
+    })
+})
+
+// Busqueda de producto por ID. 
 
 productsRouter.get ("/:productId", async (req, res) => {
     const allProductos = await listaItems.getAll();
@@ -27,13 +43,16 @@ productsRouter.get ("/:productId", async (req, res) => {
     
 });
 
-productsRouter.post ("/", async (req, res) => {
+// Añadir productos nuevos.
+
+productsRouter.post ("/products", async (req, res) => {
     const newProductPost = req.body;
     await listaItems.save (newProductPost)
-    const allProductos = await listaItems.getAll();
-    res.status(200).send (allProductos)
-    res.status(404).send ("verifica la información introducida")
+    // const allProductos = await listaItems.getAll();
+    res.redirect("/")
 })
+
+// Modificar productos existentes.
 
 productsRouter.put ("/:productId", async (req, res) => {
     const {productId} = req.params;
@@ -41,6 +60,8 @@ productsRouter.put ("/:productId", async (req, res) => {
     const prodUpdated = await listaItems.updateById (parseInt (productId), modification);
     res.status(200).send (prodUpdated)
 })
+
+// Eliminar productos. 
 
 productsRouter.delete ("/:productId", async (req, res) => {
     const allProductos = await listaItems.getAll();
