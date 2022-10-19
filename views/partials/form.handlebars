@@ -1,0 +1,23 @@
+<h2 class="text-center my-4">Bienvenido al servidor, Desafio 05 - Server con handlebars</h2>
+<div class="container">
+    <div class="d-flex justify content center">
+        <form method="post" action="/products" class="mx-auto">
+            <div>
+                <label>Nombre del producto</label>
+                <input type="text" name="title" />
+            </div>
+            <div class="my-3">
+                <label>Precio</label>
+                <input type="number" name="price" />
+            </div>
+            <div class="my-3">
+                <label>Url imagen</label>
+                <input type="text" name="thumbnail" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary m-3">Enviar</button>
+                <a href="/products" class="btn btn-secondary m-3"> ver productos</a>
+            </div>
+        </form>
+    </div>
+</div>

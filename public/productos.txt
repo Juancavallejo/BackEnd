@@ -32,21 +32,37 @@
   {
     "id": 6,
     "title": "falda",
-    "price": "400",
+    "price": 400,
     "thumbnail": "https://i.linio.com/p/bf5688435f04ba971dbd51e4ef27a612-product.webp"
-
   },
   {
     "id": 7,
     "title": "vestido",
-    "price": "600",
+    "price": 600,
     "thumbnail": "https://i.linio.com/p/4001ba795846bd7062fcfea5a12df915-product.webp"
-
   },
   {
     "id": 8,
     "title": "bolso",
-    "price": "450",
+    "price": 450,
     "thumbnail": "https://i.linio.com/p/a81640db73aa9bb9d4730e4a2be0c7f3-product.webp"
+  },
+  {
+    "id": 9,
+    "title": "Zapato",
+    "price": "460",
+    "thumbnail": "https://i.linio.com/p/1f2303ca340a5870d5e1123be6efb8f6-product.webp"
+  },
+  {
+    "id": 10,
+    "title": "Reloj",
+    "price": "600",
+    "thumbnail": "https://i.linio.com/p/7cc5c1757938d4f8e871d67c57ccb25d-product.webp"
+  },
+  {
+    "id": 11,
+    "title": "Gafas de sol",
+    "price": "320",
+    "thumbnail": "https://i.linio.com/p/7ea60a4a0773bc7acf4085056096c447-product.webp"
   }
 ]

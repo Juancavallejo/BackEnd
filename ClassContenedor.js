@@ -19,16 +19,16 @@ class Contenedor {
                     productos.push(newProduct);
                     fs.promises.writeFile("./public/productos.txt", JSON.stringify(productos, null, 2))
                 }
-            } else {
+                } else {
                 const newProduct = {
                     ...product,
                     id:1
                 }
               await fs.promises.writeFile ("./public/productos.txt", JSON.stringify([newProduct], null, 2));
             }
-        } catch (error) {
-            console.log (error);
-        }
+            } catch (error) {
+                console.log (error);
+            }
     }
 
     getById = async(id) => {

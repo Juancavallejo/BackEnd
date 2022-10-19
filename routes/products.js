@@ -4,29 +4,27 @@ const productsRouter = express.Router ();
 const Contenedor = require ("../ClassContenedor")
 const listaItems = new Contenedor ("productos.txt")
 
-productsRouter.get ("/", async (req,res) => {
-    res.status(200).render ("home")
-})
 
-productsRouter.get ("/products", async (req, res) => {
+//Obtener todos los productos guardados
+
+productsRouter.get ("/allproducts", async (req, res) => {
     const allProducts = await listaItems.getAll()
     if (allProducts) {
-        res.status(200).render ("products", {
-            allProducts: allProducts
-        })
+        res.status(200).send (allProducts)
     } else {
         res.status(404).send (`Lo sentimos, no hay productos para mostrar`)
     }
 })
 
-//Obtener todos los productos guardados
+// Añadir productos nuevos.
 
-productsRouter.get ("./partials/products", async (req, res) => {
-    const allProducts = await listaItems.getAll()
-    res.render ("products", {
-        allProducts: allProducts
-    })
-})
+productsRouter.post ("/products", async (req, res) => {
+    const newProductPost = req.body;
+    await listaItems.save (newProductPost)
+    // const allProductos = await listaItems.getAll();
+    res.redirect("/")
+}) 
+
 
 // Busqueda de producto por ID. 
 
@@ -43,14 +41,6 @@ productsRouter.get ("/:productId", async (req, res) => {
     
 });
 
-// Añadir productos nuevos.
-
-productsRouter.post ("/products", async (req, res) => {
-    const newProductPost = req.body;
-    await listaItems.save (newProductPost)
-    // const allProductos = await listaItems.getAll();
-    res.redirect("/")
-})
 
 // Modificar productos existentes.
 
