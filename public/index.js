@@ -7,7 +7,7 @@ const messageField = document.querySelector("#messageField")
 const btnSubmitChat = document.querySelector (".btnSubmitChat")
 const messageContainer = document.querySelector ("#messageContainer")
 
-let userEmail; 
+/* let userEmail; 
 Swal.fire ({
     title: "Registro de usuario",
     text: "Bienvenido, ingresa por favor tu correo electronico para acceder al servidor",
@@ -16,7 +16,7 @@ Swal.fire ({
     allowOutsideClick: false
 }).then(response => {
     userEmail = response.value;
-});
+}); */
 
 socketClient.on ("allProducts", (url) => {
     let products = ""

@@ -6,6 +6,7 @@ const mensajesGuardados = new ArchivoChat ("historial.txt")
 
 //Router
 const productsRouter = require("./routes/products");
+const carritoRouter = require ("./routes/carrito");
 
 // Variables de entorno
 const PORT = process.env.PORT || 8080
@@ -22,7 +23,7 @@ app.set ("view engine", "handlebars");
 
 // function para levantar el servidor 
 const serverExpress = app.listen (PORT, () => {
-    console.log (`Server listening on port ${PORT} - Desafio 06 - Server con Websocket`)
+    console.log (`Server listening on port ${PORT} - Desafio 06 - Primera entrega proyecto final`)
 })
 
 //Servidor de Websocket
@@ -34,8 +35,13 @@ app.use (express.static(__dirname+"/public"));
 
 // Rutas del servidor
 app.use ("/", productsRouter);
+app.use ("/carrito", carritoRouter);
 
-const historicoMensajes = []
+// Manejo de errores
+app.use ((err,req,res,next) => {
+    console.log (err);
+    res.status(500).send(`Se presentó el siguiente error: ${err.message}`)
+});
 
 io.on ("connection", (socket) => {
     console.log ("nuevo usuario conectado", socket.id)

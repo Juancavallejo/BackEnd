@@ -14,7 +14,11 @@ class Contenedor {
                     const productos = JSON.parse(contenido);
                     const newProduct = {
                         id:productos.length +1,
+                        codigo: productos.length +1,
+                        stock: 10,
+                        timestamp: new Date(),
                         ...product,
+                        descripcion: `Este producto es/son ${product.title}`
                     }
                     productos.push(newProduct);
                     fs.promises.writeFile("./public/productos.txt", JSON.stringify(productos, null, 2))
@@ -22,7 +26,11 @@ class Contenedor {
                 } else {
                 const newProduct = {
                     ...product,
-                    id:1
+                    id: 1,
+                    timestamp: new Date(),
+                    codigo: 1,
+                    stock: 10,
+                    descripcion: `Este producto es/son ${product.title}`,
                 }
               await fs.promises.writeFile ("./public/productos.txt", JSON.stringify([newProduct], null, 2));
             }
