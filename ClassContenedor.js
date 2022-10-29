@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from "fs"
 
 
 class Contenedor {
@@ -101,9 +101,7 @@ class Contenedor {
 
 const listaItems = new Contenedor ("productos.txt")
 
-
-
-module.exports = Contenedor;
+export default Contenedor
 
 
 

@@ -1,12 +1,13 @@
-const express = require ("express");
+import express from "express";
 const app = express();
 
-const ArchivoChat = require("./ClassArchivoChat")
+import ArchivoChat from "./ClassArchivoChat.js";
 const mensajesGuardados = new ArchivoChat ("historial.txt")
 
 //Router
-const productsRouter = require("./routes/products");
-const carritoRouter = require ("./routes/carrito");
+import productsRouter from "./routes/products.js";
+import carritoRouter from "./routes/carrito.js"
+
 
 // Variables de entorno
 const PORT = process.env.PORT || 8080
@@ -16,7 +17,7 @@ app.use (express.json());
 app.use (express.urlencoded ({extended : true}));
 
 // Motor de plantillas
-const handlebars = require ("express-handlebars");
+import handlebars from "express-handlebars";
 app.engine ("handlebars", handlebars.engine());
 app.set("views", "./views");
 app.set ("view engine", "handlebars");
@@ -27,11 +28,11 @@ const serverExpress = app.listen (PORT, () => {
 })
 
 //Servidor de Websocket
-const { Server } = require ("socket.io")
+import { Server } from "socket.io";
 const io = new Server(serverExpress);
 
 // Express Static
-app.use (express.static(__dirname+"/public"));
+/* app.use (express.static(__dirname+"/public")); */
 
 // Rutas del servidor
 app.use ("/", productsRouter);

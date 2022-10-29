@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from "fs"
 
 class Carrito {
     constructor(nameFile) {
@@ -92,4 +92,4 @@ class Carrito {
     }
 }
 
-module.exports = Carrito
+export default Carrito

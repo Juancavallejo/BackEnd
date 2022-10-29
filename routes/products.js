@@ -1,7 +1,7 @@
-const express = require ("express");
+import express  from "express";
 const productsRouter = express.Router ();
 
-const Contenedor = require ("../ClassContenedor")
+import Contenedor from "../ClassContenedor.js";
 const listaItems = new Contenedor ("productos.txt")
 
 const verificarRol = (req,res,next) => {
@@ -51,7 +51,7 @@ productsRouter.post ("/products",verificarRol, async (req, res) => {
     const newProductPost = req.body;
     await listaItems.save(newProductPost)
     res.status(200).json ({
-        message: "Producto creado",
+        message: `Producto creado`,
         response: newProductPost
     })
     // res.redirect("/")
@@ -60,19 +60,19 @@ productsRouter.post ("/products",verificarRol, async (req, res) => {
 
 // Modificar productos existentes.
 
-productsRouter.put ("/:productId",verificarRol, async (req, res) => {
+productsRouter.put ("/products/:productId",verificarRol, async (req, res) => {
     const {productId} = req.params;
     const modification = req.body;
     const prodUpdated = await listaItems.updateById (parseInt (productId), modification);
     res.status(200).json ({
-        message: "Producto modificado",
+        message: `El producto con Id Nro ${productId} fue modificado`,
         response: prodUpdated
     })
 })
 
 // Eliminar productos. 
 
-productsRouter.delete ("/:productId",verificarRol, async (req, res) => {
+productsRouter.delete ("/products/:productId",verificarRol, async (req, res) => {
     const allProductos = await listaItems.getAll();
     const {productId} = req.params;
     const newarray = allProductos.filter ( el => el.id !== parseInt(productId)) 
@@ -87,5 +87,4 @@ productsRouter.delete ("/:productId",verificarRol, async (req, res) => {
     }
 })
 
-
-module.exports = productsRouter;
+export default productsRouter;

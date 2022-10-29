@@ -1,7 +1,7 @@
-const express = require ("express")
+import express  from "express";
 const carritoRouter = express.Router ();
 
-const Carrito = require ("../ClassCarrito")
+import Carrito from "../ClassCarrito.js";
 const carrito = new Carrito ("carrito.txt")
 
 const verificarRol = (req,res,next) => {
@@ -46,7 +46,7 @@ carritoRouter.delete ("/delete/:carritoId",verificarRol, async (req, res) => {
 })
 
 //Buscar carrito por Id y mostrar todos los productos
-carritoRouter.get ("/buscar/:carritoId", async (req, res) => {
+carritoRouter.get ("/allcarritos/:carritoId", async (req, res) => {
     const allCarritos = await carrito.getAllCarritos();
     const {carritoId} = req.params;
     const newArray = allCarritos.find (el => el.id === parseInt(carritoId))
@@ -77,4 +77,4 @@ carritoRouter.delete ("/:carritoId/:productId", verificarRol, async (req,res) =>
 
 })
 
-module.exports = carritoRouter
+export default carritoRouter

@@ -1,5 +1,4 @@
-
-const fs = require ('fs');
+import fs from "fs"
 
 class ArchivoChat {
     constructor (nameFile) {
@@ -30,7 +29,8 @@ class ArchivoChat {
 
 const mensajesGuardados = new ArchivoChat ("historial.txt")
 
-module.exports = ArchivoChat;
+export default ArchivoChat
+
 
 
 
