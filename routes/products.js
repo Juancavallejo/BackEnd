@@ -1,8 +1,8 @@
 import express  from "express";
 const productsRouter = express.Router ();
 
-import Contenedor from "../ClassContenedor.js";
-const listaItems = new Contenedor ("productos.txt")
+import ContenedorProductos from "../ClassProductsMySql.js";
+const listaItems = new ContenedorProductos ("products")
 
 const verificarRol = (req,res,next) => {
     const rol = "admin";
@@ -19,10 +19,11 @@ const verificarRol = (req,res,next) => {
 productsRouter.get ("/allproducts", async (req, res) => {
     const allProducts = await listaItems.getAll()
     if (allProducts) {
-        res.status(200).json ({
+        res.status(200).send (allProducts)
+/*         res.status(200).json ({
             message: "Lista de productos",
             response: allProducts
-        })
+        }) */
     } else {
         res.status(404).send (`Lo sentimos, no hay productos para mostrar`)
     }
@@ -31,9 +32,8 @@ productsRouter.get ("/allproducts", async (req, res) => {
 // Busqueda de producto por ID. 
 
 productsRouter.get ("/allproducts/:productId", async (req, res) => {
-    const allProductos = await listaItems.getAll();
     const {productId} = req.params;
-    const productFiltred = allProductos.find (el => el.id === parseInt(productId))
+    const productFiltred = await listaItems.getbyId(productId)
     if (productFiltred) {
         res.status(200).json ({
             message: `Producto con id Nro ${productId}`,
@@ -63,7 +63,7 @@ productsRouter.post ("/products",verificarRol, async (req, res) => {
 productsRouter.put ("/products/:productId",verificarRol, async (req, res) => {
     const {productId} = req.params;
     const modification = req.body;
-    const prodUpdated = await listaItems.updateById (parseInt (productId), modification);
+    const prodUpdated = await listaItems.updateById((productId), modification);
     res.status(200).json ({
         message: `El producto con Id Nro ${productId} fue modificado`,
         response: prodUpdated
@@ -73,17 +73,15 @@ productsRouter.put ("/products/:productId",verificarRol, async (req, res) => {
 // Eliminar productos. 
 
 productsRouter.delete ("/products/:productId",verificarRol, async (req, res) => {
-    const allProductos = await listaItems.getAll();
     const {productId} = req.params;
-    const newarray = allProductos.filter ( el => el.id !== parseInt(productId)) 
+    const newarray = await listaItems.deleteById(productId)
     if (newarray) {
-    await listaItems.deleteById(productId)
     res.status(200).json ({
         message: `Lista de productos actualizada, el id eliminado fue el Nro ${productId}`,
         response: newarray
     })
     } else {
-        res.status(404).send ("El producto con el ID solicitado no se encuentra")
+        res.status(404).send (`El producto con el ID Nro ${productId} no se encuentra`)
     }
 })
 

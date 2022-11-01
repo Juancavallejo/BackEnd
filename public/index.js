@@ -7,7 +7,7 @@ const messageField = document.querySelector("#messageField")
 const btnSubmitChat = document.querySelector (".btnSubmitChat")
 const messageContainer = document.querySelector ("#messageContainer")
 
-/* let userEmail; 
+let userEmail; 
 Swal.fire ({
     title: "Registro de usuario",
     text: "Bienvenido, ingresa por favor tu correo electronico para acceder al servidor",
@@ -16,7 +16,7 @@ Swal.fire ({
     allowOutsideClick: false
 }).then(response => {
     userEmail = response.value;
-}); */
+});
 
 socketClient.on ("allProducts", (url) => {
     let products = ""
@@ -54,14 +54,11 @@ messageField.addEventListener ("keydown", (e) => {
     }
 })
 
-socketClient.on ("historial", (url) => {
+socketClient.on ("historial", (historial) => {
     let elementos =""
-    fetch (url)
-    .then (resp => resp.json())
-    .then ((data) =>  data.forEach (element => {
-    elementos = elementos + `<p><strong>${element.userEmail}</strong> 
-    : ${element.message}</p>`
-    messageContainer.innerHTML = elementos;
+    historial.forEach (element => {
+        elementos = elementos + `<p><strong>${element.userEmail}</strong> 
+        : ${element.message}</p>`
+        messageContainer.innerHTML = elementos;
     })
-    )
 })
