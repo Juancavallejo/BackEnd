@@ -49,11 +49,17 @@ app.use ((err,req,res,next) => {
     res.status(500).send(`Se presentó el siguiente error: ${err.message}`)
 });
 
-io.on ("connection", (socket) => {
+io.on ("connection", async (socket) => {
     console.log ("nuevo usuario conectado", socket.id)
+    // Carga de productos
     io.sockets.emit ("allProducts", "http://localhost:8080/allproducts")
+
+    // Carga de mensajes 
+    const historialInicial = await listaMensajes.getAll(); 
+    socket.emit("cargaMensajes", historialInicial )
+
+    // Actualización de mensajes 
     socket.on ("message", async (data) => {
-        // listaMensajes.crearTabla()
         listaMensajes.save(data);
         const historial = await listaMensajes.getAll(); 
         io.sockets.emit ("historial", historial)

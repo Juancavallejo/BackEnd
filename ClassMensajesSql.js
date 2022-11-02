@@ -37,8 +37,8 @@ const historialMensajes = [
 ];
 
 const listaMensajes = new ContenedorMensajesSql ("mensajes")
-// await listaMensajes.crearTabla();
-// await listaMensajes.save(historialMensajes)
+await listaMensajes.crearTabla();
+await listaMensajes.save(historialMensajes)
 
 
 export default ContenedorMensajesSql;

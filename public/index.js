@@ -54,6 +54,16 @@ messageField.addEventListener ("keydown", (e) => {
     }
 })
 
+
+socketClient.on ("cargaMensajes", (historialInicial) => {
+    let elementos =""
+    historialInicial.forEach (element => {
+        elementos = elementos + `<p><strong>${element.userEmail}</strong> 
+        : ${element.message}</p>`
+        messageContainer.innerHTML = elementos;
+    })
+})
+
 socketClient.on ("historial", (historial) => {
     let elementos =""
     historial.forEach (element => {

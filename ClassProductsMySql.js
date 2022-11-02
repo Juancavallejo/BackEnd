@@ -55,11 +55,13 @@ class ContenedorProductos {
 const productosArray = [
     {codigo: "Camisa", stock: 10, title: "Camisa",price: 300, thumbnail: "https://i.linio.com/p/840df4d6729305b627e843508bc810e7-product.webp"},
     {codigo: "jean", stock: 10, title: "jean", price: 350, thumbnail: "https://i.linio.com/p/49481c8b2b89accad291a7fa60e78f37-product.webp"},
-    {codigo: "Chaqueta", stock: 10, title: "Chaqueta", price: 700, thumbnail: "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"}
+    {codigo: "Chaqueta", stock: 10, title: "Chaqueta", price: 700, thumbnail: "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"},
+    {codigo: "Jogger", stock: 10,title: "Jogger", price: 320, thumbnail: "https://i.linio.com/p/6b87342cce8ace2fe49f5d4199a41e45-product.webp"}
+
 ]
 
 const listaItems = new ContenedorProductos ("products")
-// await listaItems.crearTabla();
-// await listaItems.save(productosArray);
+await listaItems.crearTabla();
+await listaItems.save(productosArray);
 
 export default ContenedorProductos
