@@ -3,11 +3,6 @@ import knex from "knex";
 
 const database = knex(options);
 
-const historialMensajes = [
-    {userEmail:"libro", message:"728xd"},
-
-];
-
 class ContenedorMensajesSql {
     constructor (tablename) {
         this.tablename = tablename
@@ -21,9 +16,8 @@ class ContenedorMensajesSql {
     }
 
     save = async(data) => {
-       if (data) {
-           await database(this.tablename).insert(data)
-       }
+       await database(this.tablename).insert(data)
+
     }
 
     getAll = async () => {
@@ -34,8 +28,17 @@ class ContenedorMensajesSql {
     }
 }
 
+const historialMensajes = [
+    {userEmail:"juanca@gmail.com", message:"Hola"},
+    {userEmail:"juanca@gmail.com", message:"Como estas?"},
+    {userEmail:"juanca@gmail.com", message:"Espero que bien"},
+    {userEmail:"juanca@gmail.com", message:"Que tengas feliz dia!"},
+
+];
+
 const listaMensajes = new ContenedorMensajesSql ("mensajes")
-/* await listaMensajes.crearTabla(); */
+// await listaMensajes.crearTabla();
+// await listaMensajes.save(historialMensajes)
 
 
 export default ContenedorMensajesSql;
