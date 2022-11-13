@@ -1,7 +1,7 @@
 import express  from "express";
 const carritoRouter = express.Router ();
 
-import Carrito from "../ClassCarrito.js";
+import Carrito from "../Contenedores/ClassCarrito.js";
 const carrito = new Carrito ("carrito.txt")
 
 const verificarRol = (req,res,next) => {

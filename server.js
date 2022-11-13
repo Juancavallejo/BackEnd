@@ -4,7 +4,7 @@ import { fileURLToPath} from "url"
 import path from "path";
 
 // Logica historial de mensajes
-import ContenedorMensajesSql from "./ClassMensajesSql.js";
+import ContenedorMensajesSql from "./Contenedores/ClassMensajesSql.js";
 const listaMensajes = new ContenedorMensajesSql ("mensajes")
 
 //Router

@@ -1,7 +1,7 @@
 import express  from "express";
 const productsRouter = express.Router ();
 
-import ContenedorProductos from "../ClassProductsMySql.js";
+import ContenedorProductos from "../Contenedores/ClassProductsMySql.js";
 const listaItems = new ContenedorProductos ("products")
 
 const verificarRol = (req,res,next) => {
