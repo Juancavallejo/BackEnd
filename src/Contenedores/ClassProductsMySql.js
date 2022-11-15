@@ -3,11 +3,15 @@ import knex from "knex";
 
 const database = knex(optionsProducts)
 
+// Contenedor de productos realizado con logica de mysql. Los parametros de conexión se encuentran en
+// la carpera options/mysqlconfig.js
+
 class ContenedorProductos {
     constructor (tablename) {
         this.tablename = tablename
     }
 
+    // Metodo para crear una base de datos inicial junto con el script.
     crearTabla = async() => {
     const tableExist = await database.schema.hasTable(this.tablename);
     if (tableExist) {
@@ -23,6 +27,8 @@ class ContenedorProductos {
     });
 
     }
+
+    // Metodos para manejar los productos. El uso de los metodos se puede ver en la route products
 
     save = async(newProductPost) => {
         await database(this.tablename).insert(newProductPost)
@@ -52,7 +58,11 @@ class ContenedorProductos {
     }
 }
 
-const productosArray = [
+
+// Script para llenar de información la base de datos, toda vez que al estar alojada en un pc de forma local,
+// Cada que se descarga el archivo se tendría que volver a llenar la info.
+
+/* const productosArray = [
     {codigo: "Camisa", stock: 10, title: "Camisa",price: 120, thumbnail: "https://i.linio.com/p/840df4d6729305b627e843508bc810e7-product.webp"},
     {codigo: "jean", stock: 10, title: "jean", price: 580, thumbnail: "https://i.linio.com/p/49481c8b2b89accad291a7fa60e78f37-product.webp"},
     {codigo: "Chaqueta", stock: 10, title: "Chaqueta", price: 900, thumbnail: "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"},
@@ -69,6 +79,6 @@ const productosArray = [
 
 const listaItems = new ContenedorProductos ("products")
 await listaItems.crearTabla();
-await listaItems.save(productosArray);
+await listaItems.save(productosArray); */
 
 export default ContenedorProductos
