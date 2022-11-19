@@ -62,7 +62,7 @@ class ContenedorProductosMysql {
 // Script para llenar de información la base de datos, toda vez que al estar alojada en un pc de forma local,
 // Cada que se descarga el archivo se tendría que volver a llenar la info.
 
-/* const productosArray = [
+const productosArray = [
     {codigo: "Camisa", stock: 10, title: "Camisa",price: 120, thumbnail: "https://i.linio.com/p/840df4d6729305b627e843508bc810e7-product.webp"},
     {codigo: "jean", stock: 10, title: "jean", price: 580, thumbnail: "https://i.linio.com/p/49481c8b2b89accad291a7fa60e78f37-product.webp"},
     {codigo: "Chaqueta", stock: 10, title: "Chaqueta", price: 900, thumbnail: "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp"},
@@ -79,6 +79,6 @@ class ContenedorProductosMysql {
 
 const listaItems = new ContenedorProductos ("products")
 await listaItems.crearTabla();
-await listaItems.save(productosArray); */
+await listaItems.save(productosArray);
 
 export default ContenedorProductosMysql
