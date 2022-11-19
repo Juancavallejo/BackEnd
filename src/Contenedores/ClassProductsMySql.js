@@ -6,7 +6,7 @@ const database = knex(optionsProducts)
 // Contenedor de productos realizado con logica de mysql. Los parametros de conexión se encuentran en
 // la carpera options/mysqlconfig.js
 
-class ContenedorProductos {
+class ContenedorProductosMysql {
     constructor (tablename) {
         this.tablename = tablename
     }
@@ -40,14 +40,14 @@ class ContenedorProductos {
         return (newData)
     }
 
-    getbyId = async (productId) => {
+    getById = async (productId) => {
         const productFiltred = database.from(this.tablename).select("*").where("id", productId)
         return productFiltred
     }   
 
     updateById = async (productId, modification) => {
        await database(this.tablename).where("id", productId).update(modification)
-       const productUpdated = await this.getbyId(productId)
+       const productUpdated = await this.getById(productId)
        return productUpdated
     }
 
@@ -81,4 +81,4 @@ const listaItems = new ContenedorProductos ("products")
 await listaItems.crearTabla();
 await listaItems.save(productosArray); */
 
-export default ContenedorProductos
+export default ContenedorProductosMysql

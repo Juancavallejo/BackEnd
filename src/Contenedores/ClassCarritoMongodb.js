@@ -1,6 +1,5 @@
 import mongoose from "mongoose"
 
-
 //Logica del contenedor de productos para ser usada en los metodos de anadir producto y deleteProducto
 import { productModel } from "../models/products.js";
 import ContenedorProductosMongo from "../Contenedores/ClassProductsMongodb.js";
@@ -15,16 +14,14 @@ mongoose.connect(URL, {
     useUnifiedTopology:true
     }, error=>{
         if(error) throw new Error(`connection failed ${error}`);
-        console.log("conexion a mongoDB-carrito exitosa")
+        //console.log("conexion a mongoDB-carrito exitosa")
 })
-
 
 
 class CarritoMongo {
     constructor (carritoName) {
         this.carritoName = carritoName
     }
-    
     
     // Metodos para manejar los carritos. El uso de los metodos se puede ver en la route carrito
     

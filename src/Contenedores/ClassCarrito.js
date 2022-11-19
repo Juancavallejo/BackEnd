@@ -35,6 +35,15 @@ class Carrito {
         }
     }
 
+    getById = async (carritoId) => {
+        if (fs.existsSync("./public/carrito.txt")) {
+            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8")
+            const newData = JSON.parse(data)
+            const carritoFiltred = newData.find (el => el.id === parseInt(carritoId))
+            return carritoFiltred
+        }
+    }
+
     deleteById = async (id) => {
         if (fs.existsSync("./public/carrito.txt")) {
             const data = await fs.promises.readFile("./public/carrito.txt", "utf-8")

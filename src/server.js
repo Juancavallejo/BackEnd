@@ -11,19 +11,12 @@ const listaMensajes = new ContenedorMensajesSql ("mensajes")
 import productsRouter from "./routes/products.js";
 import carritoRouter from "./routes/carrito.js"
 
-
 // Variables de entorno
 const PORT = process.env.PORT || 8080
 
 // Middlewares
 app.use (express.json());
 app.use (express.urlencoded ({extended : true}));
-
-// Motor de plantillas
-import handlebars from "express-handlebars";
-app.engine ("handlebars", handlebars.engine());
-app.set("views", "./views");
-app.set ("view engine", "handlebars");
 
 // function para levantar el servidor 
 const serverExpress = app.listen (PORT, () => {
