@@ -1,21 +1,27 @@
 import fs from "fs"
+import path from "path";
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 class Carrito {
-    constructor(nameFile) {
-        this.nameFile = nameFile;
+    constructor (nameFile) {
+        this.nameFile = path.join(__dirname, "../../", `public/${nameFile}`);
     }
 
     getAllCarritos = async () => {
-        if (fs.existsSync("./public/carrito.txt")) {
-            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8");
+        if (fs.existsSync(this.nameFile)) {
+            const data = await fs.promises.readFile(this.nameFile, "utf-8");
             const newData = JSON.parse(data);
             return newData
         }
     }
 
     crearCarrito = async () => {
-        if (fs.existsSync("./public/carrito.txt")) {
-            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8")
+        if (fs.existsSync(this.nameFile)) {
+            const data = await fs.promises.readFile(this.nameFile, "utf-8")
             const newData = JSON.parse(data)
             const newCarrito = {
                 id: newData.length + 1,
@@ -23,7 +29,7 @@ class Carrito {
                 products: []
             }
             newData.push(newCarrito)
-            fs.promises.writeFile("./public/carrito.txt", JSON.stringify(newData, null, 2));
+            fs.promises.writeFile(this.nameFile, JSON.stringify(newData, null, 2));
             return newCarrito
         } else {
             const newCarrito = {
@@ -31,13 +37,13 @@ class Carrito {
                 "timestamp": new Date(),
                 products: []
             }
-            await fs.promises.writeFile("./public/carrito.txt", JSON.stringify([newCarrito], null, 2));
+            await fs.promises.writeFile(this.nameFile, JSON.stringify([newCarrito], null, 2));
         }
     }
 
     getById = async (carritoId) => {
-        if (fs.existsSync("./public/carrito.txt")) {
-            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8")
+        if (fs.existsSync(this.nameFile)) {
+            const data = await fs.promises.readFile(this.nameFile, "utf-8")
             const newData = JSON.parse(data)
             const carritoFiltred = newData.find (el => el.id === parseInt(carritoId))
             return carritoFiltred
@@ -45,12 +51,12 @@ class Carrito {
     }
 
     deleteById = async (id) => {
-        if (fs.existsSync("./public/carrito.txt")) {
-            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8")
+        if (fs.existsSync(this.nameFile)) {
+            const data = await fs.promises.readFile(this.nameFile, "utf-8")
             const newData = JSON.parse(data)
             const newArray = newData.filter((el) => el.id !== parseInt(id))
             await fs.promises.writeFile(
-                "./public/carrito.txt",
+                this.nameFile,
                 JSON.stringify(newArray, null, 2)
             )
             return newArray
@@ -58,14 +64,14 @@ class Carrito {
     }
 
     anadirProducto = async (carritoId, productId) => {
-        if (fs.existsSync("./public/carrito.txt")) {
+        if (fs.existsSync(this.nameFile)) {
             //Inicio filtrar por carrito
-            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8");
+            const data = await fs.promises.readFile(this.nameFile, "utf-8");
             const newData = JSON.parse(data);
             const carritoFiltred = newData.find(el => el.id === parseInt(carritoId))
             //Resultado carrito filtrado acorde al carritoId
             // Inicio filtrar por producto
-            const dataProduct = await fs.promises.readFile("./public/productos.txt", "utf-8");
+            const dataProduct = await fs.promises.readFile(this.nameFile, "utf-8");
             const arrayProducts = JSON.parse(dataProduct);
             const productFiltred = arrayProducts.find(el => el.id === parseInt(productId))
             // Resultado producto filtrado acorde al productId
@@ -73,7 +79,7 @@ class Carrito {
             carritoFiltred.products.push(productFiltred)
             // se sobrescribe el nuevo archivo
             await fs.promises.writeFile(
-                "./public/carrito.txt",
+                this.nameFile,
                 JSON.stringify(newData, null, 2)
             )
             return newData
@@ -81,9 +87,9 @@ class Carrito {
     }
 
     deleteProducto = async (carritoId, productId) => {
-        if (fs.existsSync("./public/carrito.txt")) {
+        if (fs.existsSync(this.nameFile)) {
             //Inicio filtrar por carrito
-            const data = await fs.promises.readFile("./public/carrito.txt", "utf-8");
+            const data = await fs.promises.readFile(this.nameFile, "utf-8");
             const newData = JSON.parse(data);
             const carritoFiltred = newData.find(el => el.id === parseInt(carritoId))
             //Resultado carrito filtrado acorde al carritoId
@@ -93,7 +99,7 @@ class Carrito {
             carritoFiltred.products = productDeleted  
             // se sobrescribe el nuevo archivo
             await fs.promises.writeFile(
-            "./public/carrito.txt",
+            this.nameFile,
             JSON.stringify(newData, null, 2)
             )
             return newData

@@ -1,7 +1,7 @@
 import express  from "express";
 const carritoRouter = express.Router ();
 
-import {contenedorDaoCarts} from "../daos/index.js"
+import {contenedorDaoCarts} from "../daos/indexDaos.js"
 const carrito = contenedorDaoCarts;
 
 // Function para verificar rol. Por el momento se encuentra en poder acceder a todas las rutas.
@@ -58,7 +58,7 @@ carritoRouter.get ("/allcarritos/:carritoId", async (req, res) => {
 // Incorporar productos al carrito
 carritoRouter.post ("/:carritoId/:productId",verificarRol, async (req, res) => {
     const {carritoId, productId} = req.params;
-    await carritoMongo.anadirProducto(carritoId, productId);
+    await carrito.anadirProducto(carritoId, productId);
     const carritoFinal = await carrito.getById(carritoId)
     res.status(200).json ({
         message: `Al Carrito con Id Nro ${carritoId} se le ha añadido el producto con Id Nro. ${productId} `,
@@ -69,7 +69,7 @@ carritoRouter.post ("/:carritoId/:productId",verificarRol, async (req, res) => {
 // Delete productos del carrito
 carritoRouter.delete ("/:carritoId/:productId", verificarRol, async (req,res) => {
     const {carritoId, productId} = req.params;
-    await carritoMongo.deleteProducto (carritoId, productId)
+    await carrito.deleteProducto (carritoId, productId)
     const carritoFinal = await carrito.getById(carritoId)
     res.status(200).json ({
         message: `Al Carrito con Id Nro ${carritoId} se le ha eliminado el producto con Id Nro. ${productId} `,

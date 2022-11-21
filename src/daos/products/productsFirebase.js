@@ -1,4 +1,4 @@
-import ContenedorProductosFirebase from "../../Contenedores/ClassProductsFirebase.js";
+import ContenedorProductosFirebase from "../../Contenedores/Productos/ClassProductsFirebase.js";
 
 // Subclase productos firebase
 class productsDaoFirebase extends ContenedorProductosFirebase {

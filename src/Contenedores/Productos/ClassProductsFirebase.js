@@ -1,7 +1,15 @@
+import path from "path";
+import {fileURLToPath} from 'url';
+import { claveFirebase } from "../../options/firebaseKey.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 import admin from "firebase-admin"
 import {readFileSync} from "fs"
 
-const serviceAccount = JSON.parse(readFileSync("./options/firebaseKey.json"))
+const serviceAccount = claveFirebase
 
 // Inicializamos firebase.
 admin.initializeApp({credential: admin.credential.cert(serviceAccount),

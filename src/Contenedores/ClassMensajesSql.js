@@ -1,4 +1,4 @@
-import { options } from "../options/sqlConfig.js";
+import { options } from "../options/DbConfig.js";
 import knex from "knex";
 
 const database = knex(options);

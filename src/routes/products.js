@@ -1,8 +1,11 @@
 import express  from "express";
 const productsRouter = express.Router ();
 
-import {contenedorDaoProducts} from "../daos/index.js"
+import {contenedorDaoProducts} from "../daos/indexDaos.js";
 const listaItems = contenedorDaoProducts;
+
+import {productsMock} from "../mocks/productMock.js";
+const productTest = new productsMock();
 
 // Function para verificar rol. Por el momento se encuentra en poder acceder a todas las rutas.
 const verificarRol = (req,res,next) => {
@@ -65,7 +68,7 @@ productsRouter.put ("/products/:productId",verificarRol, async (req, res) => {
         message: `El producto con Id Nro ${productId} fue modificado`,
         response: prodUpdated
     })
-})
+});
 
 // Eliminar productos. 
 productsRouter.delete ("/products/:productId",verificarRol, async (req, res) => {
@@ -79,6 +82,17 @@ productsRouter.delete ("/products/:productId",verificarRol, async (req, res) => 
     } else {
         res.status(404).send (`El producto con el ID Nro ${productId} no se encuentra`)
     }
+});
+
+//Generar productos fake
+productsRouter.post ("/generar-productos", verificarRol, async (req,res) => {
+    const results =  productTest.populate(5)
+    res.send (results)
+});
+
+productsRouter.get ("/productos-test", (req, res) => {
+    const fakeproducts = productTest.getAll()
+    res.send (fakeproducts)
 })
 
 export default productsRouter;

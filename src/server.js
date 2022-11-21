@@ -4,10 +4,10 @@ import { fileURLToPath} from "url"
 import path from "path";
 
 // Logica historial de mensajes
-import ContenedorMensajesSql from "./Contenedores/ClassMensajesSql.js";
+import ContenedorMensajesSql from "./Contenedores/ClassMensajesSql.js"
 const listaMensajes = new ContenedorMensajesSql ("mensajes")
 
-//Router
+//Router - Rutas del servidor
 import productsRouter from "./routes/products.js";
 import carritoRouter from "./routes/carrito.js"
 
@@ -32,20 +32,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
 app.use (express.static(__dirname+"/public"));
 
+// -------------------------
 // Rutas del servidor
 app.use ("/", productsRouter);
 app.use ("/carrito", carritoRouter);
 
+
+// ----------------------------------
 // Manejo de errores
 app.use ((err,req,res,next) => {
     console.log (err);
     res.status(500).send(`Se presentó el siguiente error: ${err.message}`)
 });
 
+
+// ------------------------
+// Configuración del Socket
+
 io.on ("connection", async (socket) => {
-    console.log ("nuevo usuario conectado", socket.id)
-    // Carga de productos
+    console.log ("nuevo usuario conectado", socket.id);
+
+    // Carga inicial de productos
     io.sockets.emit ("allProducts", "http://localhost:8080/allproducts")
+
+    // Update de productos
 
     // Carga de mensajes 
     const historialInicial = await listaMensajes.getAll(); 

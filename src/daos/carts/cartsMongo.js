@@ -1,4 +1,4 @@
-import CarritoMongo from "../../Contenedores/ClassCarritoMongodb.js";
+import CarritoMongo from "../../Contenedores/Carritos/ClassCarritoMongodb.js";
 
 // Subclase carritos Mongo
 class cartsMongo extends CarritoMongo {

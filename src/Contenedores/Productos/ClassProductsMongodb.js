@@ -14,7 +14,8 @@ mongoose.connect(URL, {
 
 class ContenedorProductosMongo {
     constructor (baseName) {
-        this.baseName = baseName
+        this.baseName = baseName;
+        this.fakeArray = [];
     }
 
     // Metodos para manejar los productos. El uso de los metodos se puede ver en la route products
@@ -43,6 +44,15 @@ class ContenedorProductosMongo {
         await (this.baseName).deleteOne ({"codigo":productId})
         const data = this.getAll()
         return data
+    }
+
+    getallFakeProducts = () => {
+        return this.fakeArray
+    }
+
+    saveFakeProducts = (newProduct) => {
+        this.fakeArray.push(newProduct)
+        return newProduct
     }
 }
 

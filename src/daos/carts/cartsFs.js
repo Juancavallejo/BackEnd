@@ -1,4 +1,4 @@
-import Carrito from "../../Contenedores/ClassCarrito.js";
+import Carrito from "../../Contenedores/Carritos/ClassCarrito.js";
 
 //Subclase carritos FileSystem
 class cartsDaoFs extends Carrito {

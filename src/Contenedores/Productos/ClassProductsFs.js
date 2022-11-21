@@ -1,15 +1,20 @@
-import fs from "fs"
+import fs from "fs";
+import path from "path";
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
-class Contenedor {
+class ContenedorFs {
     constructor (nameFile) {
-        this.nameFile = nameFile;
+        this.nameFile = path.join(__dirname, "../../", `public/${nameFile}`);
     }
 
     save = async(product) => {
         try {
-            if (fs.existsSync("./public/productos.txt")) {
-                const contenido = await fs.promises.readFile("./public/productos.txt", "utf-8")
+            if (fs.existsSync(this.nameFile)) {
+                const contenido = await fs.promises.readFile(this.nameFile, "utf-8")
                 if (contenido) {
                     const productos = JSON.parse(contenido);
                     const newProduct = {
@@ -21,7 +26,7 @@ class Contenedor {
                         descripcion: `Este producto es/son ${product.title}`
                     }
                     productos.push(newProduct);
-                    fs.promises.writeFile("./public/productos.txt", JSON.stringify(productos, null, 2))
+                    fs.promises.writeFile(this.nameFile, JSON.stringify(productos, null, 2))
                 }
                 } else {
                 const newProduct = {
@@ -40,10 +45,12 @@ class Contenedor {
     }
 
     getAll = async () => {
-        if (fs.existsSync("./public/productos.txt")) {
-            const data = await fs.promises.readFile("./public/productos.txt", "utf-8");
+        try {
+            const data = await fs.promises.readFile(this.nameFile, "utf-8");
             const newData = JSON.parse (data);
             return newData
+        } catch (error) {
+            return []
         }
     }
     
@@ -66,7 +73,7 @@ class Contenedor {
                 id: parseInt(productId),
                 ...modification
             };
-            await fs.promises.writeFile ("./public/productos.txt", JSON.stringify(data, null, 2))
+            await fs.promises.writeFile (this.nameFile, JSON.stringify(data, null, 2))
             return data;
         } catch (error) {
             console.log (error)
@@ -75,12 +82,12 @@ class Contenedor {
 
     deleteById = async (productId) => {
         try {
-            if (fs.existsSync("./public/productos.txt")) {
-                const data = await fs.promises.readFile("./public/productos.txt", "utf-8");
+            if (fs.existsSync(this.nameFile)) {
+                const data = await fs.promises.readFile(this.nameFile, "utf-8");
                 const newData = JSON.parse (data)
                 const newArray = newData.filter ((el) => el.id !== parseInt(productId));
                 await fs.promises.writeFile(
-                    "./public/productos.txt", 
+                    this.nameFile, 
                     JSON.stringify(newArray, null, 2)
                 );
                 return newArray
@@ -91,5 +98,5 @@ class Contenedor {
     }
 }
 
-export default Contenedor
+export default ContenedorFs
 

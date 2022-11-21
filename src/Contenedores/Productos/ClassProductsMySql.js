@@ -1,4 +1,5 @@
-import { optionsProducts } from "../options/mysqlconfig.js";
+
+import { optionsProducts } from "../../options/DbConfig.js";
 import knex from "knex";
 
 const database = knex(optionsProducts)
@@ -58,6 +59,8 @@ class ContenedorProductosMysql {
     }
 }
 
+export default ContenedorProductosMysql
+
 
 // Script para llenar de información la base de datos, toda vez que al estar alojada en un pc de forma local,
 // Cada que se descarga el archivo se tendría que volver a llenar la info.
@@ -77,8 +80,6 @@ const productosArray = [
     
 ]
 
-const listaItems = new ContenedorProductos ("products")
+const listaItems = new ContenedorProductosMysql ("products")
 await listaItems.crearTabla();
 await listaItems.save(productosArray);
-
-export default ContenedorProductosMysql

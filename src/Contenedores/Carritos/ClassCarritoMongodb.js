@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
 
 //Logica del contenedor de productos para ser usada en los metodos de anadir producto y deleteProducto
-import { productModel } from "../models/products.js";
-import ContenedorProductosMongo from "../Contenedores/ClassProductsMongodb.js";
+import { productModel } from "../../models/products.js";
+import ContenedorProductosMongo from "../Productos/ClassProductsMongodb.js";
 
 
 // URL para conectarse a mongodb Atlas y tener la DB en la nube.

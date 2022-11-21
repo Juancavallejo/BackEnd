@@ -66,5 +66,10 @@
         "descripcion": "Este producto es/son jean"
       }
     ]
+  },
+  {
+    "id": 4,
+    "timestamp": "2022-11-20T23:51:06.132Z",
+    "products": []
   }
 ]

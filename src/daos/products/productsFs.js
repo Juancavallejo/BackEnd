@@ -1,7 +1,7 @@
-import Contenedor from "../../Contenedores/ClassProductsFs.js";
+import ContenedorFs from "../../Contenedores/Productos/ClassProductsFs.js"
 
 //Subclase productos FileSystem
-class productsDaoFs extends Contenedor {
+class productsDaoFs extends ContenedorFs {
     constructor (nameFile){
         // ejecuta el constructor de la clase Contenedor de FileSystem
         super(nameFile);
