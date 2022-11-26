@@ -4,8 +4,12 @@ import { fileURLToPath} from "url"
 import path from "path";
 
 // Logica historial de mensajes
-import ContenedorMensajesSql from "./Contenedores/ClassMensajesSql.js"
-const listaMensajes = new ContenedorMensajesSql ("mensajes")
+/* import { mensajesModel } from "./models/mensajes.js";
+import ContenedorMensajes from "./Contenedores/ClassMensajes.js"
+const listaMensajes = new ContenedorMensajes (mensajesModel) */
+
+import mensajes from "./Contenedores/ClassMensajesFs.js";
+const listaMensajes = new mensajes ("historial.txt")
 
 //Router - Rutas del servidor
 import productsRouter from "./routes/products.js";
@@ -57,15 +61,15 @@ io.on ("connection", async (socket) => {
 
     // Update de productos
 
-    // Carga de mensajes 
-    const historialInicial = await listaMensajes.getAll(); 
-    socket.emit("cargaMensajes", historialInicial )
+    // Carga inicial de mensajes 
+    const historial = await listaMensajes.getAll(); 
+    socket.emit("cargaMensajes", historial)
 
     // Actualización de mensajes 
     socket.on ("message", async (data) => {
-        listaMensajes.save(data);
+        await listaMensajes.save(data);
         const historial = await listaMensajes.getAll(); 
-        io.sockets.emit ("historial", historial)
+        io.sockets.emit ("cargaMensajes", historial )
     })
 })
 
