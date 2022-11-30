@@ -7,7 +7,7 @@ let contenedorDaoCarts;
 
 // Identificador:
 
-let databaseType = "mongodb";
+let databaseType = "archivos";
 
 switch (databaseType) {
     case "archivos": 

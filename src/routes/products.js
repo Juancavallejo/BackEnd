@@ -7,33 +7,63 @@ const listaItems = contenedorDaoProducts;
 import {productsMock} from "../mocks/productMock.js";
 const productTest = new productsMock();
 
-// Function para verificar rol. Por el momento se encuentra en poder acceder a todas las rutas.
-const verificarRol = (req,res,next) => {
-    const rol = "admin";
-    if (rol === "admin") {
+// Function para verificar Loggin al servidor y las rutas de productos. 
+const verificarlogin = (req,res,next) => {
+    if (req.session.username) {
         next();
     } else {
-        res.send ("No tienes acceso a la ruta")
+        res.redirect ("/login")
     }
 }
 
+productsRouter.get ("/login", (req,res) => {
+    const {user} = req.query
+    if (user) {
+        req.session.username = user
+        res.redirect("/")
+    } else {
+     res.render ("login")
+    }
+});
+
+productsRouter.post ("/login", (req,res) => {
+    const {user} = req.body;
+    res.redirect("/")
+});
+
+productsRouter.get ("/logout", (req,res) => {
+    req.session.destroy();
+    res.redirect("login")
+})
+
+// Inicial
+productsRouter.get ("/",verificarlogin, (req,res) => {
+    res.status(200).render ("home", {
+        user: req.session.username
+    })
+})
 
 //Obtener todos los productos guardados
-productsRouter.get ("/allproducts", async (req, res) => {
+productsRouter.get ("/allproducts",verificarlogin, async (req, res) => {
     const allProducts = await listaItems.getAll()
     if (allProducts) {
-        res.status(200).send (allProducts)
-/*         res.status(200).json ({
-            message: "Lista de productos",
-            response: allProducts
-        }) */
+        res.status(200).render ("allproducts", {
+            allProducts: allProducts
+        })
     } else {
         res.status(404).send (`Lo sentimos, no hay productos para mostrar`)
     }
 })
+/*     const allProducts = await listaItems.getAll()
+    if (allProducts) {
+        res.status(200).send(allProducts)
+    } else {
+        res.status(404).send (`Lo sentimos, no hay productos para mostrar`)
+    }
+}) */
 
 // Busqueda de producto por ID. 
-productsRouter.get ("/allproducts/:productId", async (req, res) => {
+productsRouter.get ("/allproducts/:productId",verificarlogin,async (req, res) => {
     const {productId} = req.params;
     const productFiltred = await listaItems.getById(productId)
     if (productFiltred) {
@@ -48,7 +78,7 @@ productsRouter.get ("/allproducts/:productId", async (req, res) => {
 });
 
 // Añadir productos nuevos.
-productsRouter.post ("/products",verificarRol, async (req, res) => {
+productsRouter.post ("/products", async (req, res) => {
     const newProductPost = req.body;
     await listaItems.save(newProductPost)
     res.status(200).json ({
@@ -60,7 +90,7 @@ productsRouter.post ("/products",verificarRol, async (req, res) => {
 
 
 // Modificar productos existentes.
-productsRouter.put ("/products/:productId",verificarRol, async (req, res) => {
+productsRouter.put ("/products/:productId", async (req, res) => {
     const {productId} = req.params;
     const modification = req.body;
     const prodUpdated = await listaItems.updateById((productId), modification);
@@ -71,7 +101,7 @@ productsRouter.put ("/products/:productId",verificarRol, async (req, res) => {
 });
 
 // Eliminar productos. 
-productsRouter.delete ("/products/:productId",verificarRol, async (req, res) => {
+productsRouter.delete ("/products/:productId", async (req, res) => {
     const {productId} = req.params;
     const newarray = await listaItems.deleteById(productId)
     if (newarray) {
@@ -85,7 +115,7 @@ productsRouter.delete ("/products/:productId",verificarRol, async (req, res) => 
 });
 
 //Generar productos fake
-productsRouter.post ("/generar-productos", verificarRol, async (req,res) => {
+productsRouter.post ("/generar-productos", async (req,res) => {
     const results =  productTest.populate(5)
     res.send (results)
 });

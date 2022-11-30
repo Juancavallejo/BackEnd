@@ -3,42 +3,63 @@ const app = express();
 import { fileURLToPath} from "url"
 import path from "path";
 
-// Logica historial de mensajes
-/* import { mensajesModel } from "./models/mensajes.js";
-import ContenedorMensajes from "./Contenedores/ClassMensajes.js"
-const listaMensajes = new ContenedorMensajes (mensajesModel) */
-
-import mensajes from "./Contenedores/ClassMensajesFs.js";
-const listaMensajes = new mensajes ("historial.txt")
-
-//Router - Rutas del servidor
-import productsRouter from "./routes/products.js";
-import carritoRouter from "./routes/carrito.js"
-
 // Variables de entorno
 const PORT = process.env.PORT || 8080
 
-// Middlewares
-app.use (express.json());
-app.use (express.urlencoded ({extended : true}));
-
-// function para levantar el servidor 
+// ----------------------------------
+// function para levantar el servidor
+// ----------------------------------------
 const serverExpress = app.listen (PORT, () => {
     console.log (`Server listening on port ${PORT}`)
 })
 
-//Servidor de Websocket
-import { Server } from "socket.io";
-const io = new Server(serverExpress);
-
 // Express Static
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename)
-app.use (express.static(__dirname+"/public"));
+/* app.use (express.static(__dirname+"/public")); */
 
-// -------------------------
-// Rutas del servidor
-app.use ("/", productsRouter);
+// ----------------------------------
+// Middlewares
+// --------------------------------------
+
+app.use (express.json());
+app.use (express.urlencoded ({extended : true}));
+
+// --------------------------------------
+// Motor de plantillas
+// --------------------------------------
+import handlebars from "express-handlebars";
+app.engine ("handlebars", handlebars.engine());
+app.set("views", "./src/views");
+app.set ("view engine", "handlebars");
+
+
+// ----------------------------------
+// Persistencia del login al servidor en la ruta products.
+// -------------------------------
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
+app.use (cookieParser());
+
+app.use (session({
+    store: MongoStore.create({
+        mongoUrl:"mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/sessionsDB?retryWrites=true&w=majority"
+                                //Nombre DB + password                             Nombre de la DB
+    }),
+    secret: "clave",
+    resave: false,
+    saveUninitialized: false,
+}))
+
+
+
+//Router - Rutas del servidor
+//-------------------------------------------------
+import productsRouter from "./routes/products.js";
+import carritoRouter from "./routes/carrito.js"
+app.use ("/",productsRouter);
 app.use ("/carrito", carritoRouter);
 
 
@@ -50,9 +71,20 @@ app.use ((err,req,res,next) => {
 });
 
 
-// ------------------------
-// Configuración del Socket
+// ----------------------------------------
+// Servidor de Websocket
+// ------------------------------------------
 
+//levantar el servidor de Websocket
+import { Server } from "socket.io";
+const io = new Server(serverExpress);
+
+// Logica historial de mensajes - Enviados mediante websocket. 
+import mensajes from "./Contenedores/ClassMensajesFs.js";
+const listaMensajes = new mensajes ("historial.txt")
+
+//Configuración del Socket
+//------------------------------------
 io.on ("connection", async (socket) => {
     console.log ("nuevo usuario conectado", socket.id);
 
