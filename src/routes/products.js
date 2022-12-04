@@ -16,8 +16,21 @@ const verificarlogin = (req,res,next) => {
     }
 }
 
+// Logica relacionada a la autenticación e inicio de la sesión: 
+// -----------------------------
+//Logueo
+productsRouter.get ("/registro", (req,res) => {
+    res.render ("signup")
+})
+
 productsRouter.get ("/login", (req,res) => {
-    const {user} = req.query
+    res.render ("login")
+});
+
+// Rutas de autenticación 
+// ---------------- Login  
+productsRouter.post ("/login", (req,res) => {
+    const {user} = req.body;
     if (user) {
         req.session.username = user
         res.redirect("/")
@@ -26,20 +39,23 @@ productsRouter.get ("/login", (req,res) => {
     }
 });
 
-productsRouter.post ("/login", (req,res) => {
-    const {user} = req.body;
-    res.redirect("/")
-});
+// ------------------ Registro
+productsRouter.post ("/registro", (req,res) => {
+    res.redirect ("/")
+})
 
+// Logout de la sesión. 
 productsRouter.get ("/logout", (req,res) => {
     req.session.destroy();
     res.redirect("login")
 })
 
 // Inicial
-productsRouter.get ("/",verificarlogin, (req,res) => {
+productsRouter.get ("/",verificarlogin, async (req,res) => {
+    const allProducts = await listaItems.getAll()
     res.status(200).render ("home", {
-        user: req.session.username
+        user: req.session.username,
+        allProducts: allProducts
     })
 })
 

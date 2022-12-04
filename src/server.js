@@ -54,7 +54,6 @@ app.use (session({
 }))
 
 
-
 //Router - Rutas del servidor
 //-------------------------------------------------
 import productsRouter from "./routes/products.js";
