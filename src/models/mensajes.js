@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// Se define la collection de productos -> DB items
+// Se define la collection de mensajes -> DB items
 const mensajesCollection = "mensajes";
 
 // Se define el schema de los productos  _> DB items
