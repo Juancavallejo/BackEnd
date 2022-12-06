@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 // Se define la collection de usuarios -> DB usuarios
 const usersCollection = "users";
 
@@ -18,6 +19,8 @@ const usersSchema = new mongoose.Schema ({
         required: true
     }
 });
+
+
 
 // Generar el modelo
 

@@ -1,7 +1,13 @@
 import express from "express";
 const app = express();
 import { fileURLToPath} from "url"
-import path from "path";
+import path, { dirname } from "path";
+import morgan from "morgan";
+import passport from "passport";
+/* import {passportLocalAuth} from "./passport/local-auth" */
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 // Variables de entorno
 const PORT = process.env.PORT || 8080
@@ -21,45 +27,42 @@ const __dirname = path.dirname(__filename)
 // ----------------------------------
 // Middlewares
 // --------------------------------------
-
+app.use (morgan("dev"))
 app.use (express.json());
-app.use (express.urlencoded ({extended : true}));
+app.use (express.urlencoded ({extended : true})); // Recibir datps desde formulario en navegador
+// Configuración de las sessions
+app.use (cookieParser());
+app.use (session({
+    store: MongoStore.create({
+        mongoUrl:"mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/sessionsDB?retryWrites=true&w=majority"
+        //Nombre DB + password                             Nombre de la DB
+    }),
+    secret: "clave",
+    resave: false,
+    saveUninitialized: false,
+}))
+// Configuración de passport
+app.use (passport.initialize()); // Conectar passport con express,
+app.use (passport.session()) // Vincular passport con las sessions de los usuarios
 
 // --------------------------------------
 // Motor de plantillas
 // --------------------------------------
 import handlebars from "express-handlebars";
 app.engine ("handlebars", handlebars.engine());
-app.set("views", "./src/views");
+app.set("views", path.join(__dirname,"views"));
 app.set ("view engine", "handlebars");
-
-
-// ----------------------------------
-// Persistencia del login al servidor en la ruta products.
-// -------------------------------
-import cookieParser from "cookie-parser";
-import session from "express-session";
-import MongoStore from "connect-mongo";
-
-app.use (cookieParser());
-
-app.use (session({
-    store: MongoStore.create({
-        mongoUrl:"mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/sessionsDB?retryWrites=true&w=majority"
-                                //Nombre DB + password                             Nombre de la DB
-    }),
-    secret: "clave",
-    resave: false,
-    saveUninitialized: false,
-}))
 
 
 //Router - Rutas del servidor
 //-------------------------------------------------
 import productsRouter from "./routes/products.js";
 import carritoRouter from "./routes/carrito.js"
+import loginRouter from "./routes/login.js"
+
 app.use ("/",productsRouter);
 app.use ("/carrito", carritoRouter);
+app.use ("/", loginRouter)
 
 
 // ----------------------------------

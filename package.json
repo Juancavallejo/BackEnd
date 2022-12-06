@@ -12,6 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "bcrypt": "^5.1.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
@@ -21,6 +24,7 @@
     "handlebars": "^4.7.7",
     "knex": "^2.3.0",
     "mongoose": "^6.7.2",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "normalizr": "^3.6.2",
     "passport": "^0.6.0",

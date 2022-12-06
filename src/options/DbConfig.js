@@ -1,5 +1,20 @@
 import path from "path";
 import {fileURLToPath} from 'url';
+/* import mongoose from "mongoose";
+
+// Logica relacionada a la autenticación e inicio de la sesión: 
+// -----------------------------
+
+// Conectamos a la base de datos: 
+const mongoUrl = "mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/usersDB?retryWrites=true&w=majority";
+
+mongoose.connect(mongoUrl,{
+    useNewUrlParser: true,
+    useUnifiedTopology:true
+},(error)=>{
+    if(error) return console.log(`Hubo un error conectandose a la base ${error}`);
+    console.log("conexion a la base de datos de manera exitosa")
+}); */
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
