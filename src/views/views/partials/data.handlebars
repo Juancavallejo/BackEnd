@@ -1,0 +1,16 @@
+<div>
+    <h3 class="text-center my-4">Listado de productos</h3>
+
+    <div class="d-flex justify-content-center">
+        <a href="/" class="btn btn-secondary m-3"> Home </a>
+    </div>
+    {{#each allProducts}}
+    <div class="card shadow d-inline-flex m-4" style="width: 20rem;">
+        <img src={{this.thumbnail}} alt={{this.title}}>
+        <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <p class="card-text">{{this.price}}</p>
+        </div>
+    </div>
+    {{/each}}
+</div>
