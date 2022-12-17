@@ -1,27 +1,24 @@
 import path from "path";
 import {fileURLToPath} from 'url';
-/* import mongoose from "mongoose";
-
-// Logica relacionada a la autenticación e inicio de la sesión: 
-// -----------------------------
-
-// Conectamos a la base de datos: 
-const mongoUrl = "mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/usersDB?retryWrites=true&w=majority";
-
-mongoose.connect(mongoUrl,{
-    useNewUrlParser: true,
-    useUnifiedTopology:true
-},(error)=>{
-    if(error) return console.log(`Hubo un error conectandose a la base ${error}`);
-    console.log("conexion a la base de datos de manera exitosa")
-}); */
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Options config Firebase Key
+export const claveFirebase = {
+    type: process.env.TYPE,
+    project_id: process.env.PROJECT_ID,
+    private_key_id: process.env.PRIVATE_KEY_ID,
+    private_key: process.env.PRIVATE_KEY,
+    client_email: process.env.CLIENT_EMAIL,
+    client_id: process.env.CLIENT_ID,
+    auth_uri: process.env.AUTH_URI,
+    token_uri:process.env.TOKEN_URI,
+    auth_provider_x509_cert_url:process.env.AUTO_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.CLIENT_X509_CERT_URL
+}
 
 // Options config Sqlite
-
 export const options = {
     client: "sqlite",
     connection: {
@@ -31,7 +28,6 @@ export const options = {
 
 
 // Options configuracion mySql
-
 export const optionsProducts = {
     //Con que gestor de base de datos me voy a conectar
     client:"mysql",

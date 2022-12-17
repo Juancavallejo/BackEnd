@@ -2,9 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import passport from "passport";
 import { Strategy as localStrategy } from "passport-local";
+import GoogleStrategy from "passport-google-oauth20";
 import { usersModel } from "../models/user.js";
 import bcrypt from "bcrypt";
-import GoogleStrategy from "passport-google-oauth20";
+import { config } from "../options/config.js";
 
 
 const loginRouter = express.Router();
@@ -93,9 +94,9 @@ passport.use("localLogin", new localStrategy(
     }
 ))
 
-
-const google_client_id = "514204559844-tjvcuhrsfstkl4uhmql88fa40bsp36o4.apps.googleusercontent.com";
-const google_client_secret = "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";
+// Estrategia de Login usando passport - Google
+const google_client_id = config.GOOGLE_ID_CLIENT;
+const google_client_secret = config.GOOGLE_CLIENT_SECRET;
 
 passport.use(new GoogleStrategy({
     clientID: google_client_id,
@@ -125,22 +126,19 @@ passport.use(new GoogleStrategy({
 // -----------------------------
 
 // Conectamos a la base de datos: 
-const mongoUrl = "mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/items?retryWrites=true&w=majority";
+const mongoUrl = `mongodb+srv://coderEcommerce:${config.CLAVE_MONGODB}@cluster0.cawm4qi.mongodb.net/items?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, (error) => {
     if (error) return console.log(`Hubo un error conectandose a la base ${error}`);
-    console.log("conexion a la base de datos de manera exitosa")
+    console.log("conexion a la base de datos users de manera exitosa")
 });
 
 
 // Rutas de autenticación 
-
-/* loginRouter.get("/registroGoogle", (req, res) => {
-    res.render("login")
-}) */
+// ------------------ Login usando passport - Google.
 
 loginRouter.get("/auth/google",
     passport.authenticate("google", { scope: ["email", "profile"] })
@@ -170,7 +168,7 @@ loginRouter.post("/registro", passport.authenticate("localRegistry", {
     res.redirect("/")
 })
 
-// ---------------- Login usando passport - LocalStrategy 
+// ---------------- Login usando passport - LocalStrategy & Google. 
 loginRouter.get("/login", (req, res) => {
     const errorMessage = req.session.messages ? req.session.messages[0] : '';
     res.render("login", { error: errorMessage })

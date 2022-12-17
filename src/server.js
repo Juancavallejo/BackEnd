@@ -8,9 +8,10 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import { config } from "./options/config.js";
 
 // Variables de entorno
-const PORT = process.env.PORT || 8080
+const PORT = config.PORT
 
 // ----------------------------------
 // function para levantar el servidor
@@ -59,10 +60,12 @@ app.set ("view engine", "handlebars");
 import productsRouter from "./routes/products.js";
 import carritoRouter from "./routes/carrito.js"
 import loginRouter from "./routes/login.js"
+import apiRouter from "./routes/apiInfo.js";
 
 app.use ("/",productsRouter);
 app.use ("/carrito", carritoRouter);
 app.use ("/", loginRouter)
+app.use ("/api", apiRouter)
 
 
 // ----------------------------------

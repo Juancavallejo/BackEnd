@@ -1,13 +1,13 @@
 import path from "path";
 import {fileURLToPath} from 'url';
-import { claveFirebase } from "../../options/firebaseKey.js";
+import { claveFirebase } from "../../options/DbConfig.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
 import admin from "firebase-admin"
-import {readFileSync} from "fs"
+
 
 const serviceAccount = claveFirebase
 

@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { config } from "../../options/config.js";
 
 // URL para conectarse a mongodb Atlas y tener la DB en la nube.
-const URL = "mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/items?retryWrites=true&w=majority"
+const URL = `mongodb+srv://coderEcommerce:${config.CLAVE_MONGODB}@cluster0.cawm4qi.mongodb.net/items?retryWrites=true&w=majority`
                             //Nombre DB + password                             Nombre de la DB
 //Logica para conectarse. 
 mongoose.connect(URL, {
@@ -9,7 +10,7 @@ mongoose.connect(URL, {
     useUnifiedTopology:true
     }, error=>{
         if(error) throw new Error(`connection failed ${error}`);
-        
+        console.log("conexion a mongoDB-productos exitosa")
 })
 
 class ContenedorProductosMongo {

@@ -1,26 +1,50 @@
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
+import { config } from "../options/config.js";
 
-const google_client_id= "514204559844-tjvcuhrsfstkl4uhmql88fa40bsp36o4.apps.googleusercontent.com";
-const google_client_secret= "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";
-
-passport.use(new GoogleStrategy ({
-    authorizationURL: 'https://www.example.com/oauth2/authorize',
-    tokenURL: 'https://www.example.com/oauth2/token',
-    clientID: google_client_id,
-    clientSecret: google_client_secret,
-    callbackURL: "http://localhost:8080/google/callback",
-  },
-  function(accessToken, refreshToken, profile, done) {
-   return done(err, profile);
-  }
-));
-
-passport.serializeUser ((user,done) => {
-    done (null, user);
+// Serializar y deserializar usuarios
+passport.serializeUser((user, done) => {
+    done(null, user.id);
 })
 
-passport.deserializeUser ((user,done) => {
-    done (null, user);
+passport.deserializeUser((id, done) => {
+    // Validar si usuario existe en MongoDB
+    usersModel.findById(id, (error, userFound) => {
+        if (error) return done(error);
+        return done(null, userFound)
+    })
 })
+
+// Estrategia de Login usando passport - Google
+const google_client_id = config.GOOGLE_ID_CLIENT;
+const google_client_secret = config.GOOGLE_CLIENT_SECRET;
+
+
+export const GoogleLogin = () => {
+    passport.use(new GoogleStrategy({
+        clientID: google_client_id,
+        clientSecret: google_client_secret,
+        callbackURL: "http://localhost:8080/google/callback",
+    },
+        (token, accesToken, profile, done) => {
+            usersModel.findOne({ username: profile.username }, (error, userFound) => {
+                if (error) return done(error, null, { message: "Hubo un error" });
+                if (userFound) return done(null, userFound);
+                //guardamos el usuario en la db
+                const newUser = {
+                    user: profile._json.email,
+                    username: profile.displayName,
+                    password: profile.id
+                };
+                usersModel.create(newUser, (error, userCreated) => {
+                    if (error) return done(error, null, { message: "Hubo un error al registrar el usuario" })
+                    return done(null, userCreated);
+                })
+            })
+        }
+    ));
+
+}
+
+
 
