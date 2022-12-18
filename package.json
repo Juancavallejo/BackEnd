@@ -5,7 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"nodemon src/server.js",
+    "server-cluster":"nodemon src/server.js --puerto 8081 --modo cluster",
+    "forever":"forever start server.js",
+    "babel-node": "babel ./src/routes/login.js -o ./src/routes/loginNew.js",
+    "pm2-fork": "pm2 start src/index.js",
+    "pm2-cluster": "pm2 start src/index.js -i 0"
   },
   "keywords": [],
   "author": "",
@@ -34,5 +40,9 @@
     "passport-local": "^1.0.0",
     "socket.io": "^4.5.3",
     "sqlite3": "^5.1.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   }
 }

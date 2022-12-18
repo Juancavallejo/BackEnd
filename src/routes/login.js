@@ -7,6 +7,7 @@ import { usersModel } from "../models/user.js";
 import bcrypt from "bcrypt";
 import { config } from "../options/config.js";
 
+const PORT = config.PORT
 
 const loginRouter = express.Router();
 
@@ -101,7 +102,7 @@ const google_client_secret = config.GOOGLE_CLIENT_SECRET;
 passport.use(new GoogleStrategy({
     clientID: google_client_id,
     clientSecret: google_client_secret,
-    callbackURL: "http://localhost:8080/google/callback",
+    callbackURL: `http://localhost:${PORT}/google/callback`,
 },
     (token, accesToken, profile, done) => {
         usersModel.findOne({ username: profile.username }, (error, userFound) => {
@@ -133,7 +134,7 @@ mongoose.connect(mongoUrl, {
     useUnifiedTopology: true
 }, (error) => {
     if (error) return console.log(`Hubo un error conectandose a la base ${error}`);
-    console.log("conexion a la base de datos users de manera exitosa")
+    //console.log("conexion a la base de datos users de manera exitosa")
 });
 
 

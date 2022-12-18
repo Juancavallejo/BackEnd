@@ -9,16 +9,39 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { config } from "./options/config.js";
+import cluster from "cluster";
+import { numeroCPUs } from "./routes/apiInfo.js";
+
 
 // Variables de entorno
 const PORT = config.PORT
+let MODO = config.MODO
 
 // ----------------------------------
 // function para levantar el servidor
 // ----------------------------------------
-const serverExpress = app.listen (PORT, () => {
-    console.log (`Server listening on port ${PORT}`)
-})
+let serverExpress = app.listen();
+
+if (MODO === "cluster") {
+    if (cluster.isPrimary) {
+        for (let i=0; i<numeroCPUs; i++) {
+            cluster.fork();
+        }
+    } else {
+        serverExpress= app.listen (PORT, () => {
+            console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
+        })
+    }
+} else {
+    serverExpress = app.listen (PORT, () => {
+        console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
+    })
+}
+
+
+/* const serverExpress = app.listen (PORT, () => {
+    console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
+}) */
 
 // Express Static
 const __filename = fileURLToPath(import.meta.url);
@@ -108,5 +131,5 @@ io.on ("connection", async (socket) => {
         const historial = await listaMensajes.getAll(); 
         io.sockets.emit ("cargaMensajes", historial )
     })
-})
+}) 
 

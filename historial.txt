@@ -1,6 +1,0 @@
-[
-  {
-    "userEmail": "juanca@gmail.com",
-    "message": "prueba fs"
-  }
-]
