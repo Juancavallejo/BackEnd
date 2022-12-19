@@ -44,17 +44,17 @@ var _expressHandlebars = require("express-handlebars");
 
 var _expressHandlebars2 = _interopRequireDefault(_expressHandlebars);
 
-// var _products = require("./routes/productsNew.js");
+ var _products = require("./routes/productsNew.js");
 
-// var _products2 = _interopRequireDefault(_products);
+ var _products2 = _interopRequireDefault(_products);
 
-// var _carrito = require("./routes/carrito.js");
+ var _carrito = require("./routes/carrito.js");
 
-// var _carrito2 = _interopRequireDefault(_carrito);
+ var _carrito2 = _interopRequireDefault(_carrito);
 
-// var _login = require("./routes/loginNew.js");
+ var _login = require("./routes/loginNew.js");
 
-// var _login2 = _interopRequireDefault(_login);
+ var _login2 = _interopRequireDefault(_login);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -124,9 +124,9 @@ app.get("/", function (req, res) {
     res.send("Respuesta desde el puerto " + PORT + " en el proceso " + process.pid);
 });
 
-// app.use("/", _products2.default);
-// app.use("/carrito", _carrito2.default);
-// app.use("/", _login2.default);
+app.use("/", _products2.default);
+app.use("/carrito", _carrito2.default);
+app.use("/", _login2.default);
 app.use("/api", _apiInfo2.default);
 
 // ----------------------------------
