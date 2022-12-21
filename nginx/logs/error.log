@@ -75,3 +75,6 @@
 2022/12/18 18:34:59 [notice] 5344#24620: signal process started
 2022/12/18 18:35:10 [notice] 22544#18652: signal process started
 2022/12/18 18:35:10 [error] 22544#18652: CreateFile() "C:\Users\Asus\Desktop\Carrera Programacion\Programacion BackEnd\Desafios\DesafiosBackEnd\server\nginx/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2022/12/19 21:50:00 [error] 15824#18196: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /login HTTP/1.1", upstream: "http://127.0.0.1:8081/login", host: "localhost"
+2022/12/19 21:50:19 [error] 15824#18196: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /api/info HTTP/1.1", upstream: "http://127.0.0.1:8081/api/info", host: "localhost"
+2022/12/19 21:51:31 [error] 15824#18196: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /api/info HTTP/1.1", upstream: "http://127.0.0.1:8081/api/info", host: "localhost"

@@ -14,7 +14,8 @@ import { numeroCPUs } from "./routes/apiInfo.js";
 
 
 // Variables de entorno
-const PORT = config.PORT
+// const PORT = config.PORT
+const PORT = process.argv[2] || 8080;
 let MODO = config.MODO
 
 // ----------------------------------
