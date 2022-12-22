@@ -25,18 +25,21 @@ var nodeVersion = process.version;
 var carpetaProyecto = process.cwd();
 var usoMemoria = process.memoryUsage();
 var numeroCPUs = exports.numeroCPUs = _os2.default.cpus().length;
+var PORT = process.argv[2] || 8080;
 
 apiRouter.get("/info", function (req, res) {
-    res.json({
-        argumentosEntrada: argumentosEntrada,
-        pathEjecucion: pathEjecucion,
-        processId: processId,
-        sistemaOperativo: sistemaOperativo,
-        nodeVersion: nodeVersion,
-        carpetaProyecto: carpetaProyecto,
-        usoMemoria: usoMemoria,
-        numeroCPUs: numeroCPUs
-    });
+    res.json ({
+        message: `Respuesta desde el puerto ${PORT} en el proceso ${process.pid}`,
+        response: 
+            argumentosEntrada,
+            pathEjecucion,
+            processId,
+            sistemaOperativo,
+            nodeVersion,
+            carpetaProyecto,
+            usoMemoria,
+            numeroCPUs,
+    })
 });
 
 var arrayAleatorio = [];

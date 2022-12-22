@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  
   
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server":"nodemon src/server.js",
     "server-cluster":"nodemon src/server.js --puerto 8081 --modo cluster",
-    "forever":"forever start server.js",
+    "forever":"forever start src/server.js",
     "babel-node": "babel ./src/routes/login.js -o ./src/routes/loginNew.js",
-    "pm2-fork": "pm2 start src/index.js",
-    "pm2-cluster": "pm2 start src/index.js -i 0"
+    "pm2-fork": "pm2 start src/index.js --watch",
+    "pm2-cluster": "pm2 start src/index.js --watch --name=servidorCluster -i 0 -- 8081"
   },
   "keywords": [],
   "author": "",

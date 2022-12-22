@@ -63,7 +63,7 @@ var app = (0, _express2.default)();
 
 
 // Variables de entorno
-var PORT = _config.config.PORT;
+var PORT = process.argv[2] || 8080;
 var MODO = _config.config.MODO;
 
 // ----------------------------------

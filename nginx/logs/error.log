@@ -78,3 +78,13 @@
 2022/12/19 21:50:00 [error] 15824#18196: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /login HTTP/1.1", upstream: "http://127.0.0.1:8081/login", host: "localhost"
 2022/12/19 21:50:19 [error] 15824#18196: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /api/info HTTP/1.1", upstream: "http://127.0.0.1:8081/api/info", host: "localhost"
 2022/12/19 21:51:31 [error] 15824#18196: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /api/info HTTP/1.1", upstream: "http://127.0.0.1:8081/api/info", host: "localhost"
+2022/12/21 18:48:26 [notice] 16464#30924: signal process started
+2022/12/21 18:48:59 [notice] 27976#4760: signal process started
+2022/12/21 18:49:32 [notice] 10156#26064: signal process started
+2022/12/21 18:49:32 [error] 10156#26064: CreateFile() "C:\Users\Asus\Desktop\Carrera Programacion\Programacion BackEnd\Desafios\DesafiosBackEnd\server\nginx/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2022/12/21 18:49:59 [error] 16912#24880: *1 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /api/info HTTP/1.1", upstream: "http://127.0.0.1:8082/api/info", host: "localhost"
+2022/12/21 18:55:36 [error] 16912#24880: *12 connect() failed (10061: No connection could be made because the target machine actively refused it) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET /api/info HTTP/1.1", upstream: "http://127.0.0.1:8082/api/info", host: "localhost"
+2022/12/21 18:55:48 [notice] 26008#12584: signal process started
+2022/12/21 18:56:57 [notice] 9044#5580: signal process started
+2022/12/21 18:58:16 [notice] 17660#12112: signal process started
+2022/12/21 19:02:21 [notice] 5912#12788: signal process started
