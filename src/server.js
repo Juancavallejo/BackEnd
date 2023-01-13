@@ -11,12 +11,14 @@ import MongoStore from "connect-mongo";
 import { config } from "./options/config.js";
 import cluster from "cluster";
 import { numeroCPUs } from "./routes/apiInfo.js";
+import { logger } from "./loggers/logger.js";
 
 
 // Variables de entorno
-// const PORT = config.PORT
-const PORT = process.argv[2] || 8080;
+const PORT = config.PORT
+// const PORT = process.argv[2] || 8080;
 let MODO = config.MODO
+
 
 // ----------------------------------
 // function para levantar el servidor
@@ -30,12 +32,12 @@ if (MODO === "cluster") {
         }
     } else {
         serverExpress= app.listen (PORT, () => {
-            console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
+            logger.info (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
         })
     }
 } else {
     serverExpress = app.listen (PORT, () => {
-        console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
+        logger.info (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
     })
 }
 
@@ -86,19 +88,24 @@ import carritoRouter from "./routes/carrito.js"
 import loginRouter from "./routes/login.js"
 import apiRouter from "./routes/apiInfo.js";
 
-app.use ("/",productsRouter);
-app.use ("/carrito", carritoRouter);
-app.use ("/", loginRouter)
-app.use ("/api", apiRouter)
+const found = (req,res, next) => {
+    res.status(200)
+    logger.info ("Info: Ruta encontrada")
+    next()
+}
 
+app.use ("/",found, productsRouter);
+app.use ("/carrito", found, carritoRouter);
+app.use ("/", found, loginRouter)
+app.use ("/api", found, apiRouter)
 
-// ----------------------------------
 // Manejo de errores
-app.use ((err,req,res,next) => {
-    console.log (err);
-    res.status(500).send(`Se presentó el siguiente error: ${err.message}`)
-});
-
+const notfound = (req,res) => {
+    res.status(404)
+    logger.warn ("Error : Ruta no encontrada")
+    res.json ("Error : Ruta no encontrada")
+};
+app.use (notfound)
 
 // ----------------------------------------
 // Servidor de Websocket
@@ -115,7 +122,7 @@ const listaMensajes = new mensajes ("historial.txt")
 //Configuración del Socket
 //------------------------------------
 io.on ("connection", async (socket) => {
-    console.log ("nuevo usuario conectado", socket.id);
+    logger.trace ("nuevo usuario conectado", socket.id);
 
     // Carga inicial de productos
     io.sockets.emit ("allProducts", "http://localhost:8080/allproducts")

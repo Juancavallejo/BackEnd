@@ -7,7 +7,7 @@ import { usersModel } from "../models/user.js";
 import bcrypt from "bcrypt";
 import { config } from "../options/config.js";
 
-const PORT = config.PORT
+
 
 const loginRouter = express.Router();
 
@@ -98,6 +98,7 @@ passport.use("localLogin", new localStrategy(
 // Estrategia de Login usando passport - Google
 const google_client_id = config.GOOGLE_ID_CLIENT;
 const google_client_secret = config.GOOGLE_CLIENT_SECRET;
+const PORT = config.PORT
 
 passport.use(new GoogleStrategy({
     clientID: google_client_id,
