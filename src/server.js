@@ -15,7 +15,7 @@ import { logger } from "./loggers/logger.js";
 
 
 // Variables de entorno
-const PORT = process.env.PORT || 8080;
+const PORT = config.PORT;
 // const PORT = process.argv[2] || 8080;
 let MODO = config.MODO
 
@@ -36,7 +36,7 @@ if (MODO === "cluster") {
         })
     }
 } else {
-    app.listen (PORT, () => {
+    serverExpress = app.listen (PORT, () => {
         logger.info (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
     })
 }

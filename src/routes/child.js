@@ -12,7 +12,7 @@ export const numeroAleatorios = (qty) => {
     return arrayAleatorio
 }
 
-process.send("listo"); //proceso hijo listo para trabajar
+/* process.send("listo"); //proceso hijo listo para trabajar
 
 ////recibimos los mensajes del proceso padre.
 process.on("message",(parentMsg)=>{
@@ -22,4 +22,4 @@ process.on("message",(parentMsg)=>{
         //enviamos el resultado de la operacion del proceso hijo al proceso padre
         process.send(resultadoSuma);
     }
-})
+}) */

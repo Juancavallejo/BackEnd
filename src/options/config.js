@@ -14,7 +14,7 @@ const objArguments = parsedArgs(process.argv.slice(2), options)
 
 export const config = {
     MODO: objArguments.modo,
-    PORT: objArguments.puerto,
+    PORT: process.env.PORT || 8080,
     GOOGLE_ID_CLIENT: process.env.GOOGLE_ID_CLIENT,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     CLAVE_MONGODB: process.env.CLAVE_MONGODB
