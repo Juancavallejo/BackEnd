@@ -36,7 +36,7 @@ if (MODO === "cluster") {
         })
     }
 } else {
-    serverExpress = app.listen (PORT, () => {
+    app.listen (PORT, () => {
         logger.info (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
     })
 }

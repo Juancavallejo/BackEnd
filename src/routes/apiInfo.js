@@ -78,7 +78,7 @@ apiRouter.get ("/randombloq", (req,res) => {
 })
 
 //Ruta no bloqueante, numeros aleatorios
-apiRouter.get ("/random", (req,res) => {
+/* apiRouter.get ("/random", (req,res) => {
     const child = fork("src/routes/child.js");
     //recibimos mensajes del proceso hijo
     child.on("message",(childMsg)=>{
@@ -90,5 +90,5 @@ apiRouter.get ("/random", (req,res) => {
         }
     });
 });
-
+ */
 export default apiRouter;
