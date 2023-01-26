@@ -7,6 +7,7 @@ import { usersModel } from "../models/user.js";
 import bcrypt from "bcrypt";
 import { config } from "../options/config.js";
 
+import {createTransport} from "nodemailer"
 
 
 const loginRouter = express.Router();
@@ -35,9 +36,10 @@ passport.use("localRegistry", new localStrategy(
     {
         passReqToCallback: true,
         usernameField: "email",
-        passwordField: "password"
+        passwordField: "password",
+        
     },
-    (req, username, password, done) => {
+    (req, username, password,done) => {
         //Logica para registrar al usuario
         // Verificar si usuario existe en la DB
         usersModel.findOne({ username: username }, (error, userExist) => {
@@ -54,6 +56,9 @@ passport.use("localRegistry", new localStrategy(
                 user: req.body.user,
                 username: username,
                 password: createHast(password),
+                address: req.body.address,
+                phone: req.body.phone,
+                age: req.body.age
             };
             usersModel.create(newUser, (error, userCreated) => {
                 if (error)
@@ -156,6 +161,26 @@ loginRouter.get("/google/callback", passport.authenticate("google", {
 
 
 // ------------------ Registro usando passport - LocalStrategy
+// Configuración del transporter - Email
+const testEmail = "juancamilovallejo@gmail.com";
+const testPass = 'jeyhyoaaqcjtahnm'
+
+const transporter = createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+        user: testEmail,
+        pass: testPass
+    },
+    secure: false,
+    tls: {
+        rejectUnauthorized: false,
+    }
+});
+
+
+
+
 loginRouter.get("/registro", (req, res) => {
     const errorMessage = req.session.messages ? req.session.messages[0] : '';
     res.render("signup", { error: errorMessage })
@@ -166,8 +191,23 @@ loginRouter.post("/registro", passport.authenticate("localRegistry", {
     failureRedirect: "/registro",
     failureMessage: true, // Envio de mensajes de error por medio de req.session.messages
     passReqToCallback: true
-}), (req, res) => {
+}), async (req, res) => {
+    try {
+        const mailOptions = {
+            from: "Servidor de NodeJs",
+            to: testEmail,
+            subject: "Nuevo registro",
+            html: `<div>
+                    <h1>Se ha registrado un nuevo usuario</h1>
+                    <p>Con los siguientes datos nombre:${req.user.user},email:${req.user.email},direccion:${req.user.address},numero de telefono: ${req.user.phone}</p> 
+                    </div>
+                    `,
+        }
+    await transporter.sendMail(mailOptions)
     res.redirect("/")
+    } catch (error) {
+        res.send (error)
+    }
 })
 
 // ---------------- Login usando passport - LocalStrategy & Google. 
@@ -190,7 +230,10 @@ loginRouter.get("/perfil", (req, res) => {
     if (req.isAuthenticated()) {
         res.render("perfil", {
             user: req.user.user,
+            address: req.user.address,
+            phone: req.user.phone,
         })
+        console.log (req.user)
     } else {
         res.render("login")
     }

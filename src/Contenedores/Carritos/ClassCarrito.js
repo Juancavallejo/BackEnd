@@ -19,6 +19,16 @@ class Carrito {
         }
     }
 
+    getAllProducts = async () => {
+    const data = await fs.promises.readFile(this.nameFile, "utf-8");
+    const newData = JSON.parse(data);
+    const carritosMaped = newData.map(function(current){
+            return (current.products)
+        })
+        const products = JSON.stringify(carritosMaped)
+        return products
+    }
+
     crearCarrito = async () => {
         if (fs.existsSync(this.nameFile)) {
             const data = await fs.promises.readFile(this.nameFile, "utf-8")
@@ -69,11 +79,13 @@ class Carrito {
             const data = await fs.promises.readFile(this.nameFile, "utf-8");
             const newData = JSON.parse(data);
             const carritoFiltred = newData.find(el => el.id === parseInt(carritoId))
+            console.log (carritoFiltred)
             //Resultado carrito filtrado acorde al carritoId
             // Inicio filtrar por producto
-            const dataProduct = await fs.promises.readFile(this.nameFile, "utf-8");
+            const dataProduct = await fs.promises.readFile("../server/src/public/productos.txt", "utf-8");
             const arrayProducts = JSON.parse(dataProduct);
             const productFiltred = arrayProducts.find(el => el.id === parseInt(productId))
+            console.log (productFiltred)
             // Resultado producto filtrado acorde al productId
             // Añadir el producto filtrado al carrito filtrado
             carritoFiltred.products.push(productFiltred)

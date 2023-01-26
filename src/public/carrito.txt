@@ -1,33 +1,7 @@
 [
   {
     "id": 1,
-    "timestamp": "2022-10-23T23:53:16.217Z",
-    "products": [
-      {
-        "id": 3,
-        "codigo": 3,
-        "stock": 10,
-        "timestamp": "2022-10-24T23:29:59.967Z",
-        "title": "Chaqueta",
-        "price": 700,
-        "thumbnail": "https://i.linio.com/p/8236764ab90c934f336074f530ed2e24-catalog.webp",
-        "descripcion": "Este producto es/son Chaqueta"
-      },
-      {
-        "id": 6,
-        "codigo": 6,
-        "stock": 10,
-        "timestamp": "2022-10-24T23:29:59.967Z",
-        "title": "falda",
-        "price": 400,
-        "thumbnail": "https://i.linio.com/p/bf5688435f04ba971dbd51e4ef27a612-product.webp",
-        "descripcion": "Este producto es/son falda"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "timestamp": "2022-10-23T23:53:18.624Z",
+    "timestamp": "2023-01-22T14:39:23.739Z",
     "products": [
       {
         "id": 1,
@@ -40,36 +14,5 @@
         "descripcion": "Este producto es/son Camisa"
       }
     ]
-  },
-  {
-    "id": 3,
-    "timestamp": "2022-10-25T02:27:30.820Z",
-    "products": [
-      {
-        "id": 7,
-        "codigo": 7,
-        "stock": 10,
-        "timestamp": "2022-10-24T23:29:59.967Z",
-        "title": "vestido",
-        "price": 600,
-        "thumbnail": "https://i.linio.com/p/4001ba795846bd7062fcfea5a12df915-product.webp",
-        "descripcion": "Este producto es/son vestido"
-      },
-      {
-        "id": 2,
-        "codigo": 2,
-        "stock": 10,
-        "timestamp": "2022-10-24T23:29:59.967Z",
-        "title": "jean",
-        "price": 350,
-        "thumbnail": "https://i.linio.com/p/49481c8b2b89accad291a7fa60e78f37-product.webp",
-        "descripcion": "Este producto es/son jean"
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "timestamp": "2022-11-20T23:51:06.132Z",
-    "products": []
   }
 ]

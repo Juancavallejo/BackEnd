@@ -18,6 +18,18 @@ const usersSchema = new mongoose.Schema ({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    age: {
+        type: Number,
+        required: true
+    }
 });
 
 

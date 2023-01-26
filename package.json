@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
+    "start": "nodemon src/server.js",
     "server-cluster": "nodemon src/server.js --puerto 8081 --modo cluster",
-    "server-production":"nodemon src/server.js --modo prod",
+    "server-production": "nodemon src/server.js --modo prod",
     "forever": "forever start src/server.js",
     "babel-node": "babel ./src/routes/login.js -o ./src/routes/loginNew.js",
     "pm2-fork": "pm2 start src/index.js --watch",
@@ -37,12 +37,14 @@
     "mongoose": "^6.7.2",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.9.0",
     "normalizr": "^3.6.2",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "socket.io": "^4.5.3",
-    "sqlite3": "^5.1.2"
+    "sqlite3": "^5.1.2",
+    "twilio": "^3.84.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

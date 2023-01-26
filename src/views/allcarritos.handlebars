@@ -1,0 +1,21 @@
+<div>
+    <h3> Listado de ordenes de compra</h3>
+    {{#each allCarritos}}
+    <div class="card shadow d-inline-flex m-4" style="width: 20rem;">
+        <h5 class="card-title">Carrito de compras con id{{this.id}}</h5>
+        <div class="card-body">
+            {{#each products}}
+            <p> Id del producto: {{this.id}}</p>
+            <p> {{this.title}}</p>
+            <p> Valor: {{this.price}}</p>
+            <img src={{this.thumbnail}} alt={{this.title}}>
+            <p> {{this.descripcion}}</p>
+            {{/each}}
+        </div>
+    </div>
+    {{/each}}
+    <a href="/carrito/generarCompra" type="submit" class="btn btn-secondary m-3"> Confirma tu compra </a>
+</div>
+<div class="d-flex justify-content-center">
+    <a href="/" class="btn btn-secondary m-3"> Home </a>
+</div>

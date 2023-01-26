@@ -1,4 +1,6 @@
-import express  from "express";
+import express, { json }  from "express";
+import {createTransport} from "nodemailer";
+import twilio from "twilio";
 const carritoRouter = express.Router ();
 
 import {contenedorDaoCarts} from "../daos/indexDaos.js"
@@ -19,7 +21,9 @@ const verificarRol = (req,res,next) => {
 carritoRouter.get ("/allcarritos", async (req, res) => {
     const allCarritos = await carrito.getAllCarritos()
     if (allCarritos) {
-        res.status(200).send (allCarritos)
+        res.status(200).render ("allcarritos", {
+            allCarritos: allCarritos
+        })
         // res.status(200).json ({
         //     message: "Lista de ordenes de compra",
         //     response: allCarritos
@@ -76,6 +80,64 @@ carritoRouter.delete ("/:carritoId/:productId", verificarRol, async (req,res) =>
         response: carritoFinal
     }) 
 
+})
+
+// Guardar order de compra
+const testEmail = "juancamilovallejo@gmail.com";
+const testPass = 'jeyhyoaaqcjtahnm'
+
+// Configuración del transporter - Gmail
+const transporter = createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+        user: testEmail,
+        pass: testPass
+    },
+    secure: false,
+    tls: {
+        rejectUnauthorized: false,
+    }
+});
+
+const accountId = "AC5860ae9b886ed01b1bac2ce511275e9e";
+const authToken = "c53bd29e4790d8b660539b8e60da58d6";
+
+const client = twilio(accountId, authToken)
+
+carritoRouter.get("/generarCompra", async(req,res) => {
+    const user = req.user.user;
+    const email = req.user.username;
+    const address = req.user.address;
+    const phone = req.user.phone;
+    const allproducts = await carrito.getAllProducts()
+    const mailOptions = {
+        from: "Servidor de NodeJs",
+        to: testEmail,
+        subject: "Order de compra generada",
+        html: `Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},
+        esta persona ha comprado los siguientes productos:${allproducts}`,
+    }
+    try {
+        // Envio de mensaje de whatsapp de confirmación de compra al administrador.
+        await transporter.sendMail(mailOptions)
+        // Envio de mensaje de whatsapp de confirmación de compra al administrador.
+        await client.messages.create({
+            body:`Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},
+            esta persona ha comprado los siguientes productos:${allCarritos}`,
+            from: "whatsapp:+14155238886", //Emisor del mensaje
+            to:`whatsapp:${phone}`
+        }) 
+        // Envio de mensaje de texto de confirmación de compra al cliente.
+        await client.messages.create({
+            body:"Su pedido se ha recibido y está en proceso. Muchas gracias por su compra.",
+            from: "+19253719982", //Emisor del mensaje
+            to:`${phone}`
+        })
+        res.redirect ("/")
+    } catch (error) {
+        res.send (error)
+    }
 })
 
 export default carritoRouter
