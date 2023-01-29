@@ -1,11 +1,10 @@
-import express, { json }  from "express";
-import {createTransport} from "nodemailer";
-import twilio from "twilio";
-const carritoRouter = express.Router ();
-
-import {contenedorDaoCarts} from "../daos/indexDaos.js"
+import express from "express";
+import { transporter, testEmail } from "../../services/messages/gmail.js";
+import { client } from "../../services/messages/twilio.js";
+import {contenedorDaoCarts} from "../../daos/indexDaos.js"
 const carrito = contenedorDaoCarts;
 
+const router = express.Router ();
 // Function para verificar rol. Por el momento se encuentra en poder acceder a todas las rutas.
 const verificarRol = (req,res,next) => {
     const rol = "client";
@@ -17,8 +16,7 @@ const verificarRol = (req,res,next) => {
 }
 
 //Obtener todos los productos guardados
-
-carritoRouter.get ("/allcarritos", async (req, res) => {
+router.get ("/allcarritos", async (req, res) => {
     const allCarritos = await carrito.getAllCarritos()
     if (allCarritos) {
         res.status(200).render ("allcarritos", {
@@ -34,13 +32,13 @@ carritoRouter.get ("/allcarritos", async (req, res) => {
 })
 
 // Crear carrito y devuelve id
-carritoRouter.post ("/", verificarRol,async (req, res) => {
+router.post ("/", verificarRol,async (req, res) => {
     const newCarrito = await carrito.crearCarrito()
     res.status(200).json (`Carrito creado con Id Nro ${newCarrito.codigo} y con fecha ${newCarrito.timestamp}`)
 })
 
 // Delete all carrito
-carritoRouter.delete ("/delete/:carritoId",verificarRol, async (req, res) => {
+router.delete ("/delete/:carritoId",verificarRol, async (req, res) => {
     const {carritoId} = req.params;
     const carritoDeleted = await carrito.deleteById(carritoId)
     res.status(200).json ({
@@ -50,7 +48,7 @@ carritoRouter.delete ("/delete/:carritoId",verificarRol, async (req, res) => {
 })
 
 //Buscar carrito por Id y mostrar todos los productos
-carritoRouter.get ("/allcarritos/:carritoId", async (req, res) => {
+router.get ("/allcarritos/:carritoId", async (req, res) => {
     const {carritoId} = req.params;
     const carritoFiltred = await carrito.getById(carritoId)
     res.status(200).json ({
@@ -60,7 +58,7 @@ carritoRouter.get ("/allcarritos/:carritoId", async (req, res) => {
 })
 
 // Incorporar productos al carrito
-carritoRouter.post ("/:carritoId/:productId",verificarRol, async (req, res) => {
+router.post ("/:carritoId/:productId",verificarRol, async (req, res) => {
     const {carritoId, productId} = req.params;
     await carrito.anadirProducto(carritoId, productId);
     const carritoFinal = await carrito.getById(carritoId)
@@ -71,7 +69,7 @@ carritoRouter.post ("/:carritoId/:productId",verificarRol, async (req, res) => {
 })
 
 // Delete productos del carrito
-carritoRouter.delete ("/:carritoId/:productId", verificarRol, async (req,res) => {
+router.delete ("/:carritoId/:productId", verificarRol, async (req,res) => {
     const {carritoId, productId} = req.params;
     await carrito.deleteProducto (carritoId, productId)
     const carritoFinal = await carrito.getById(carritoId)
@@ -79,33 +77,9 @@ carritoRouter.delete ("/:carritoId/:productId", verificarRol, async (req,res) =>
         message: `Al Carrito con Id Nro ${carritoId} se le ha eliminado el producto con Id Nro. ${productId} `,
         response: carritoFinal
     }) 
-
 })
 
-// Guardar order de compra
-const testEmail = "juancamilovallejo@gmail.com";
-const testPass = 'jeyhyoaaqcjtahnm'
-
-// Configuración del transporter - Gmail
-const transporter = createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    auth: {
-        user: testEmail,
-        pass: testPass
-    },
-    secure: false,
-    tls: {
-        rejectUnauthorized: false,
-    }
-});
-
-const accountId = "AC5860ae9b886ed01b1bac2ce511275e9e";
-const authToken = "c53bd29e4790d8b660539b8e60da58d6";
-
-const client = twilio(accountId, authToken)
-
-carritoRouter.get("/generarCompra", async(req,res) => {
+router.get("/generarCompra", async(req,res) => {
     const user = req.user.user;
     const email = req.user.username;
     const address = req.user.address;
@@ -115,18 +89,16 @@ carritoRouter.get("/generarCompra", async(req,res) => {
         from: "Servidor de NodeJs",
         to: testEmail,
         subject: "Order de compra generada",
-        html: `Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},
-        esta persona ha comprado los siguientes productos:${allproducts}`,
+        html: `Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},esta persona ha comprado los siguientes productos:${allproducts}`,
     }
     try {
         // Envio de mensaje de whatsapp de confirmación de compra al administrador.
         await transporter.sendMail(mailOptions)
         // Envio de mensaje de whatsapp de confirmación de compra al administrador.
         await client.messages.create({
-            body:`Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},
-            esta persona ha comprado los siguientes productos:${allCarritos}`,
-            from: "whatsapp:+14155238886", //Emisor del mensaje
-            to:`whatsapp:${phone}`
+            body:`Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},esta persona ha comprado los siguientes productos:${allproducts}`,
+            from: `whatsapp:+14155238886`, //Emisor del mensaje
+            to:`whatsapp:+573122829659`
         }) 
         // Envio de mensaje de texto de confirmación de compra al cliente.
         await client.messages.create({
@@ -137,7 +109,9 @@ carritoRouter.get("/generarCompra", async(req,res) => {
         res.redirect ("/")
     } catch (error) {
         res.send (error)
+        console.log (error)
     }
 })
 
-export default carritoRouter
+
+export { router as carritoRouter}

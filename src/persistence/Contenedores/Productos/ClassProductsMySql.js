@@ -1,5 +1,5 @@
 
-import { optionsProducts } from "../../options/DbConfig.js";
+import { optionsProducts } from "../../../options/DbConfig.js"
 import knex from "knex";
 
 const database = knex(optionsProducts)

@@ -20,15 +20,15 @@ const usersSchema = new mongoose.Schema ({
     },
     address: {
         type: String,
-        required: true
+        
     },
     phone: {
         type: String,
-        required: true
+        
     },
     age: {
         type: Number,
-        required: true
+        
     }
 });
 

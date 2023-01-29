@@ -1,18 +1,16 @@
 import express from "express";
-const app = express();
 import { fileURLToPath} from "url"
 import path, { dirname } from "path";
 import morgan from "morgan";
 import passport from "passport";
-/* import {passportLocalAuth} from "./passport/local-auth" */
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import { config } from "./options/config.js";
 import cluster from "cluster";
-import { numeroCPUs } from "./routes/apiInfo.js";
-import { logger } from "./loggers/logger.js";
-
+import { numeroCPUs } from "./routes/api/apiInfo.js";
+import { logger } from "./services/loggers/logger.js";
+const app = express();
 
 // Variables de entorno
 const PORT = config.PORT;
@@ -83,10 +81,7 @@ app.set ("view engine", "handlebars");
 
 //Router - Rutas del servidor
 //-------------------------------------------------
-import productsRouter from "./routes/products.js";
-import carritoRouter from "./routes/carrito.js"
-import loginRouter from "./routes/login.js"
-import apiRouter from "./routes/apiInfo.js";
+import { apiRouter } from "./routes/index.js";
 
 const found = (req,res, next) => {
     res.status(200)
@@ -94,10 +89,7 @@ const found = (req,res, next) => {
     next()
 }
 
-app.use ("/",found, productsRouter);
-app.use ("/carrito", found, carritoRouter);
-app.use ("/", found, loginRouter)
-app.use ("/api", found, apiRouter)
+app.use ("/", found, apiRouter)
 
 // Manejo de errores
 const notfound = (req,res) => {
@@ -116,7 +108,7 @@ import { Server } from "socket.io";
 const io = new Server(serverExpress);
 
 // Logica historial de mensajes - Enviados mediante websocket. 
-import mensajes from "./Contenedores/ClassMensajesFs.js";
+import mensajes from "./persistence/Contenedores/ClassMensajesFs.js";
 const listaMensajes = new mensajes ("historial.txt")
 
 //Configuración del Socket

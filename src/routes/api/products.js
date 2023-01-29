@@ -1,11 +1,11 @@
 import express  from "express";
 
-const productsRouter = express.Router ();
+const router = express.Router ();
 
-import {contenedorDaoProducts} from "../daos/indexDaos.js";
+import {contenedorDaoProducts} from "../../daos/indexDaos.js";
 const listaItems = contenedorDaoProducts;
 
-import {productsMock} from "../mocks/productMock.js";
+import {productsMock} from "../../services/mocks/productMock.js";
 const productTest = new productsMock();
 
 function checkAuthentication (req,res,next) {
@@ -17,7 +17,7 @@ function checkAuthentication (req,res,next) {
 }
 
 // Inicial
-productsRouter.get ("/",checkAuthentication, async (req,res) => {
+router.get ("/",checkAuthentication, async (req,res) => {
     const user = req.user.user
     const allProducts = await listaItems.getAll()
     res.status(200).render ("home", {
@@ -27,7 +27,7 @@ productsRouter.get ("/",checkAuthentication, async (req,res) => {
 })
 
 //Obtener todos los productos guardados
-productsRouter.get ("/allproducts",checkAuthentication, async (req, res) => {
+router.get ("/allproducts",checkAuthentication, async (req, res) => {
     const allProducts = await listaItems.getAll()
     if (allProducts) {
         res.status(200).render ("allproducts", {
@@ -46,7 +46,7 @@ productsRouter.get ("/allproducts",checkAuthentication, async (req, res) => {
 }) */
 
 // Busqueda de producto por ID. 
-productsRouter.get ("/allproducts/:productId",async (req, res) => {
+router.get ("/allproducts/:productId",async (req, res) => {
     const {productId} = req.params;
     const productFiltred = await listaItems.getById(productId)
     if (productFiltred) {
@@ -61,7 +61,7 @@ productsRouter.get ("/allproducts/:productId",async (req, res) => {
 });
 
 // Añadir productos nuevos.
-productsRouter.post ("/products", async (req, res) => {
+router.post ("/products", async (req, res) => {
     const newProductPost = req.body;
     await listaItems.save(newProductPost)
     res.status(200).json ({
@@ -73,7 +73,7 @@ productsRouter.post ("/products", async (req, res) => {
 
 
 // Modificar productos existentes.
-productsRouter.put ("/products/:productId", async (req, res) => {
+router.put ("/products/:productId", async (req, res) => {
     const {productId} = req.params;
     const modification = req.body;
     const prodUpdated = await listaItems.updateById((productId), modification);
@@ -84,7 +84,7 @@ productsRouter.put ("/products/:productId", async (req, res) => {
 });
 
 // Eliminar productos. 
-productsRouter.delete ("/products/:productId", async (req, res) => {
+router.delete ("/products/:productId", async (req, res) => {
     const {productId} = req.params;
     const newarray = await listaItems.deleteById(productId)
     if (newarray) {
@@ -98,14 +98,15 @@ productsRouter.delete ("/products/:productId", async (req, res) => {
 });
 
 //Generar productos fake
-productsRouter.post ("/generar-productos", async (req,res) => {
+router.post ("/generar-productos", async (req,res) => {
     const results =  productTest.populate(5)
     res.send (results)
 });
 
-productsRouter.get ("/productos-test", (req, res) => {
+router.get ("/productos-test", (req, res) => {
     const fakeproducts = productTest.getAll()
     res.send (fakeproducts)
 })
 
-export default productsRouter;
+
+export { router as productsRouter}

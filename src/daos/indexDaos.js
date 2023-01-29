@@ -1,12 +1,11 @@
 //Import de los modelos de MongoDB
-import { productModel } from "../models/products.js";
-import { carritoModel } from "../models/carrito.js";
+import { productModel } from "../persistence/models/products.js";
+import { carritoModel } from "../persistence/models/carrito.js";
 
 let contenedorDaoProducts;
 let contenedorDaoCarts;
 
 // Identificador:
-
 let databaseType = "archivos";
 
 switch (databaseType) {

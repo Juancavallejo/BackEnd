@@ -1,4 +1,4 @@
-import ContenedorMock from "../Contenedores/ClassMock.js";
+import ContenedorMock from "../../persistence/Contenedores/ClassMock.js";
 import {faker} from "@faker-js/faker";
 const {datatype, commerce, random, image} = faker;
 

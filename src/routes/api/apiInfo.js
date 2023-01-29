@@ -1,11 +1,11 @@
 import express from "express";
 import os from "os";
-import { config } from "../options/config.js";
+import { config } from "../../options/config.js";
 import compression from "compression";
 import { numeroAleatorios } from "./child.js";
 import { fork } from "child_process";
 
-const apiRouter = express.Router();
+const router = express.Router();
 
 let argumentosEntrada = process.argv
 let pathEjecucion = process.execPath
@@ -18,7 +18,7 @@ export let numeroCPUs = os.cpus().length
 const PORT = config.PORT
 const MODO = config.MODO
 
-apiRouter.get ("/info", (req,res) => {
+router.get ("/info", (req,res) => {
     res.json ({
         message: `Respuesta desde el puerto ${PORT}, modo ${MODO} en el proceso ${process.pid}`,
         response: 
@@ -33,7 +33,7 @@ apiRouter.get ("/info", (req,res) => {
     })
 })
 
-apiRouter.get ("/infoCompressed", compression(), (req,res) => {
+router.get ("/infoCompressed", compression(), (req,res) => {
     res.json ({
         message: `Respuesta desde el puerto ${PORT} en el proceso ${process.pid}`,
         response: 
@@ -64,7 +64,7 @@ apiRouter.get ("/infoCompressed", compression(), (req,res) => {
 let arrayAleatorio = []
 
 // Ruta bloqueante, numeros aleatorios
-apiRouter.get ("/randombloq", (req,res) => {
+router.get ("/randombloq", (req,res) => {
     const {qty} = req.query
     if (qty >= 0) {
     const results = numeroAleatorios(parseInt(qty))
@@ -78,7 +78,7 @@ apiRouter.get ("/randombloq", (req,res) => {
 })
 
 //Ruta no bloqueante, numeros aleatorios
-/* apiRouter.get ("/random", (req,res) => {
+/* router.get ("/random", (req,res) => {
     const child = fork("src/routes/child.js");
     //recibimos mensajes del proceso hijo
     child.on("message",(childMsg)=>{
@@ -91,4 +91,5 @@ apiRouter.get ("/randombloq", (req,res) => {
     });
 });
  */
-export default apiRouter;
+
+export { router as infoRouter}

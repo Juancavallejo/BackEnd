@@ -1,5 +1,5 @@
 import log4js from "log4js";
-import { config } from "../options/config.js";
+import { config } from "../../options/config.js";
 
 //configuracion de log4js
 log4js.configure({

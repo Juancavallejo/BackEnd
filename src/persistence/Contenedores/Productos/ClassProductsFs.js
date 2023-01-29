@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 class ContenedorFs {
     constructor (nameFile) {
-        this.nameFile = path.join(__dirname, "../../", `public/${nameFile}`);
+        this.nameFile = path.join(__dirname, "../../../", `public/${nameFile}`);
     }
 
     save = async(product) => {
@@ -37,7 +37,7 @@ class ContenedorFs {
                     stock: 10,
                     descripcion: `Este producto es/son ${product.title}`,
                 }
-              await fs.promises.writeFile ("./public/productos.txt", JSON.stringify([newProduct], null, 2));
+              await fs.promises.writeFile ("../../../public/productos.txt", JSON.stringify([newProduct], null, 2));
             }
             } catch (error) {
                 console.log (error);

@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 class Carrito {
     constructor (nameFile) {
-        this.nameFile = path.join(__dirname, "../../", `public/${nameFile}`);
+        this.nameFile = path.join(__dirname, "../../../", `public/${nameFile}`);
     }
 
     getAllCarritos = async () => {

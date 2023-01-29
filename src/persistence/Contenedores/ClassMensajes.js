@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
+import { optionsMongo } from "../../options/DbConfig.js";
 
-// URL para conectarse a mongodb Atlas y tener la DB en la nube.
-const URL = "mongodb+srv://coderEcommerce:desafio@cluster0.cawm4qi.mongodb.net/items?retryWrites=true&w=majority"
-                            //Nombre DB + password                             Nombre de la DB
 //Logica para conectarse. 
-mongoose.connect(URL, {
+mongoose.connect(optionsMongo.mongoUrl, {
     useNewUrlParser:true,
     useUnifiedTopology:true
     }, error=>{
-        if(error) throw new Error(`connection failed ${error}`);
-        
+        if(error) throw new Error(`connection failed ${error}`);   
 })
 
 class ContenedorMensajes {

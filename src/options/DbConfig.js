@@ -1,5 +1,9 @@
 import path from "path";
 import {fileURLToPath} from 'url';
+import { config } from "./config.js"
+import mongoose from "mongoose";
+import { logger } from "../services/loggers/logger.js";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,4 +42,19 @@ export const optionsProducts = {
        password:"",
        database: "ecommerceProducts" 
     }
+}
+
+//Options configuracion MongoDB
+
+export const connectDB = () => {
+const mongoUrl= `mongodb+srv://coderEcommerce:${config.CLAVE_MONGODB}@cluster0.cawm4qi.mongodb.net/items?retryWrites=true&w=majority`;
+                                            //Nombre DB + password                             Nombre de la DB
+    mongoose.connect(mongoUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }, (error) => {
+        if (error) return logger.error(`Hubo un error conectandose a la base ${error}`);
+        logger.info("conexion a la base de datos de manera exitosa")
+    });
+
 }

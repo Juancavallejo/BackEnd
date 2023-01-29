@@ -1,6 +1,11 @@
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
-import { config } from "../options/config.js";
+import { usersModel } from "../../persistence/models/user.js";
+import { config } from "../../options/config.js";
+import { connectDB } from "../../options/DbConfig.js";
+
+// Conectamos a la base de datos de Mongo: 
+connectDB();
 
 // Serializar y deserializar usuarios
 passport.serializeUser((user, done) => {
@@ -18,13 +23,13 @@ passport.deserializeUser((id, done) => {
 // Estrategia de Login usando passport - Google
 const google_client_id = config.GOOGLE_ID_CLIENT;
 const google_client_secret = config.GOOGLE_CLIENT_SECRET;
+const PORT = config.PORT
 
-
-export const GoogleLogin = () => {
+export const google = () => {
     passport.use(new GoogleStrategy({
         clientID: google_client_id,
         clientSecret: google_client_secret,
-        callbackURL: "http://localhost:8080/google/callback",
+        callbackURL: `http://localhost:${PORT}/google/callback`,
     },
         (token, accesToken, profile, done) => {
             usersModel.findOne({ username: profile.username }, (error, userFound) => {
@@ -43,8 +48,8 @@ export const GoogleLogin = () => {
             })
         }
     ));
-
 }
+
 
 
 
