@@ -17,5 +17,8 @@ export const config = {
     PORT: process.env.PORT || 8080,
     GOOGLE_ID_CLIENT: process.env.GOOGLE_ID_CLIENT,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-    CLAVE_MONGODB: process.env.CLAVE_MONGODB
+    CLAVE_MONGODB: process.env.CLAVE_MONGODB,
+    ACCOUNTID: process.env.ACCOUNTID,
+    AUTHTOKEN: process.env.AUTHTOKEN,
+    dbType: process.env.DATABASE_TYPE || "archivos"
 }

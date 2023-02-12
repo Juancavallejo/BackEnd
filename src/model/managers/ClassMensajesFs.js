@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 class mensajes {
     constructor (historial) {
-        this.historial = path.join(__dirname,"../", `public/${historial}`)
+        this.historial = path.join(__dirname,"../../", `public/${historial}`)
     }
 
     save = async(data) => {

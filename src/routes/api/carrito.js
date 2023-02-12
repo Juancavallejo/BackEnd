@@ -1,7 +1,7 @@
 import express from "express";
 import { transporter, testEmail } from "../../services/messages/gmail.js";
 import { client } from "../../services/messages/twilio.js";
-import {contenedorDaoCarts} from "../../daos/indexDaos.js"
+import {contenedorDaoCarts} from "../../model/indexDaos.js"
 const carrito = contenedorDaoCarts;
 
 const router = express.Router ();

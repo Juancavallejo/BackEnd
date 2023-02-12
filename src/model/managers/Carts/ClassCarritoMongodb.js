@@ -1,8 +1,10 @@
 import { connectDB } from "../../../options/DbConfig.js";
 
 //Logica del contenedor de productos para ser usada en los metodos de anadir producto y deleteProducto
-import { productModel } from "../../models/products.js";
+import { productModel } from "../../dbModels/products.js";
+
 import ContenedorProductosMongo from "../Productos/ClassProductsMongodb.js";
+
                     
 //Logica para conectarse. 
 connectDB()

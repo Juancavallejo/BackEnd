@@ -1,4 +1,4 @@
-import ContenedorProductosMysql from "../../persistence/Contenedores/Productos/ClassProductsMySql.js";
+import ContenedorProductosMysql from "../../managers/Productos/ClassProductsMySql.js";
 
 //Subclase productos Sql
 class productsDaoSql extends ContenedorProductosMysql {

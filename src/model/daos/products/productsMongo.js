@@ -1,4 +1,4 @@
-import ContenedorProductosMongo from "../../persistence/Contenedores/Productos/ClassProductsMongodb.js"
+import ContenedorProductosMongo from "../../managers/Productos/ClassProductsMongodb.js"
 
 //Subclase productos Mongodb
 class productsDaoMongo extends ContenedorProductosMongo {

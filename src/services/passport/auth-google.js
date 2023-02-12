@@ -1,6 +1,6 @@
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth20";
-import { usersModel } from "../../persistence/models/user.js";
+import { usersModel } from "../../model/dbModels/user.js";
 import { config } from "../../options/config.js";
 import { connectDB } from "../../options/DbConfig.js";
 

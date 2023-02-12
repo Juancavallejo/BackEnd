@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as localStrategy } from "passport-local";
-import { usersModel } from "../../persistence/models/user.js";
+import { usersModel } from "../../model/dbModels/user.js";
 import bcrypt from "bcrypt";
 import { connectDB } from "../../options/DbConfig.js";
 

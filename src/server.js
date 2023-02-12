@@ -108,7 +108,7 @@ import { Server } from "socket.io";
 const io = new Server(serverExpress);
 
 // Logica historial de mensajes - Enviados mediante websocket. 
-import mensajes from "./persistence/Contenedores/ClassMensajesFs.js";
+import mensajes from "./model/managers/ClassMensajesFs.js";
 const listaMensajes = new mensajes ("historial.txt")
 
 //Configuración del Socket

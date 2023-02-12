@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
+    "start-dev": "nodemon src/server.js",
     "server-cluster": "nodemon src/server.js --puerto 8081 --modo cluster",
     "server-production": "nodemon src/server.js --modo prod",
     "forever": "forever start src/server.js",

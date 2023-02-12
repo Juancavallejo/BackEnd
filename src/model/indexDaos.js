@@ -1,32 +1,32 @@
 //Import de los modelos de MongoDB
-import { productModel } from "../persistence/models/products.js";
-import { carritoModel } from "../persistence/models/carrito.js";
+import { productModel } from "./dbModels/products.js";
+import { carritoModel } from "./dbModels/carrito.js";
+import { config } from "../options/config.js"
+
 
 let contenedorDaoProducts;
 let contenedorDaoCarts;
 
-// Identificador:
-let databaseType = "archivos";
 
-switch (databaseType) {
+switch (config.dbType) {
     case "archivos": 
-        const {productsDaoFs}= await import("./products/productsFs.js") 
-        const {cartsDaoFs} = await import ("./carts/cartsFs.js")   
+        const {productsDaoFs}= await import("./daos/products/productsFs.js") 
+        const {cartsDaoFs} = await import ("./daos/carts/cartsFs.js")   
         contenedorDaoProducts = new productsDaoFs("productos.txt")
         contenedorDaoCarts = new cartsDaoFs("carrito.txt")
         break;
     case "mongodb":
-        const {productsDaoMongo} = await import("./products/productsMongo.js")
-        const {cartsMongo} = await import("./carts/cartsMongo.js")
+        const {productsDaoMongo} = await import("./daos/products/productsMongo.js")
+        const {cartsMongo} = await import("./daos/carts/cartsMongo.js")
         contenedorDaoProducts = new productsDaoMongo(productModel)
         contenedorDaoCarts = new cartsMongo(carritoModel)
         break;
     case "firebase":
-        const {productsDaoFirebase} = await import ("./products/productsFirebase.js")
+        const {productsDaoFirebase} = await import ("./daos/products/productsFirebase.js")
         contenedorDaoProducts = new productsDaoFirebase("products")
         break;
     case "sql":
-        const {productsDaoSql} = await import("./products/productsSql.js")
+        const {productsDaoSql} = await import("./daos/products/productsSql.js")
         contenedorDaoProducts = new productsDaoSql("products")
         break;
 }

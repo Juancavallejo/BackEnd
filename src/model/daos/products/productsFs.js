@@ -1,4 +1,4 @@
-import ContenedorFs from "../../persistence/Contenedores/Productos/ClassProductsFs.js"
+import ContenedorFs from "../../managers/Productos/ClassProductsFs.js"
 
 //Subclase productos FileSystem
 class productsDaoFs extends ContenedorFs {

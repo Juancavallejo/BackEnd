@@ -2,7 +2,7 @@ import express  from "express";
 
 const router = express.Router ();
 
-import {contenedorDaoProducts} from "../../daos/indexDaos.js";
+import {contenedorDaoProducts} from "../../model/indexDaos.js";
 const listaItems = contenedorDaoProducts;
 
 import {productsMock} from "../../services/mocks/productMock.js";
