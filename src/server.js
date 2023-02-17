@@ -10,6 +10,7 @@ import { config } from "./options/config.js";
 import cluster from "cluster";
 import { numeroCPUs } from "./routes/api/apiInfo.js";
 import { logger } from "./services/loggers/logger.js";
+import cors from "cors"
 const app = express();
 
 // Variables de entorno
@@ -69,7 +70,7 @@ app.use (session({
 // Configuración de passport
 app.use (passport.initialize()); // Conectar passport con express,
 app.use (passport.session()) // Vincular passport con las sessions de los usuarios
-
+app.use (cors())
 // --------------------------------------
 // Motor de plantillas
 // --------------------------------------
@@ -133,3 +134,4 @@ io.on ("connection", async (socket) => {
     })
 }) 
 
+export { app }

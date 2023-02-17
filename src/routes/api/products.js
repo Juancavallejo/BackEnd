@@ -17,7 +17,7 @@ function checkAuthentication (req,res,next) {
 }
 
 // Inicial
-router.get ("/",checkAuthentication, async (req,res) => {
+router.get ("/", async (req,res) => {
     const user = req.user.user
     const allProducts = await listaItems.getAll()
     res.status(200).render ("home", {
@@ -27,7 +27,7 @@ router.get ("/",checkAuthentication, async (req,res) => {
 })
 
 //Obtener todos los productos guardados
-router.get ("/allproducts",checkAuthentication, async (req, res) => {
+router.get ("/allproducts", async (req, res) => {
     const allProducts = await listaItems.getAll()
     if (allProducts) {
         res.status(200).render ("allproducts", {
