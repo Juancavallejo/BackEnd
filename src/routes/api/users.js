@@ -12,7 +12,7 @@ router.get ("/allusers",async (req, res) => {
     if (allusers) {
         res.status(200).json(allusers)
     } else {
-        res.status(404).send (`Lo sentimos, no hay productos para mostrar`)
+        res.status(404).send (`Lo sentimos, no hay usuarios para mostrar`)
     }
 })
 

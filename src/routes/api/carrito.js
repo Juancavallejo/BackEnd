@@ -1,6 +1,8 @@
 import express from "express";
 import { transporter, testEmail } from "../../services/messages/gmail.js";
 import { client } from "../../services/messages/twilio.js";
+import * as carritoControler from "../../controller/carritos.controller.js"
+
 import {contenedorDaoCarts} from "../../model/indexDaos.js"
 const carrito = contenedorDaoCarts;
 
@@ -16,68 +18,25 @@ const verificarRol = (req,res,next) => {
 }
 
 //Obtener todos los productos guardados
-router.get ("/allcarritos", async (req, res) => {
-    const allCarritos = await carrito.getAllCarritos()
-    if (allCarritos) {
-        res.status(200).render ("allcarritos", {
-            allCarritos: allCarritos
-        })
-        // res.status(200).json ({
-        //     message: "Lista de ordenes de compra",
-        //     response: allCarritos
-        // })
-    } else {
-        res.status(404).send (`Lo sentimos, no hay carritos para mostrar`)
-    }
-})
+router.get ("/allcarritos", carritoControler.getAllCarritosController)
+
 
 // Crear carrito y devuelve id
-router.post ("/", verificarRol,async (req, res) => {
-    const newCarrito = await carrito.crearCarrito()
-    res.status(200).json (`Carrito creado con Id Nro ${newCarrito.codigo} y con fecha ${newCarrito.timestamp}`)
-})
+router.post ("/", verificarRol,carritoControler.crearCarritoController)
 
 // Delete all carrito
-router.delete ("/delete/:carritoId",verificarRol, async (req, res) => {
-    const {carritoId} = req.params;
-    const carritoDeleted = await carrito.deleteById(carritoId)
-    res.status(200).json ({
-        message: `El Carrito con Id Nro ${carritoId} ha sido eliminado, nueva lista de carritos:`,
-        response: carritoDeleted
-    })
-})
+router.delete ("/delete/:carritoId",verificarRol, carritoControler.deleteAllCarritoController)
+
 
 //Buscar carrito por Id y mostrar todos los productos
-router.get ("/allcarritos/:carritoId", async (req, res) => {
-    const {carritoId} = req.params;
-    const carritoFiltred = await carrito.getById(carritoId)
-    res.status(200).json ({
-        message: `El Carrito con Id Nro ${carritoId} tiene los siguientes productos`,
-        response: carritoFiltred
-    }) 
-})
+router.get ("/allcarritos/:carritoId", carritoControler.getByIdController)
 
 // Incorporar productos al carrito
-router.post ("/:carritoId/:productId",verificarRol, async (req, res) => {
-    const {carritoId, productId} = req.params;
-    await carrito.anadirProducto(carritoId, productId);
-    const carritoFinal = await carrito.getById(carritoId)
-    res.status(200).json ({
-        message: `Al Carrito con Id Nro ${carritoId} se le ha añadido el producto con Id Nro. ${productId} `,
-        response: carritoFinal
-    }) 
-})
+router.post ("/:carritoId/:productId",verificarRol,carritoControler.anadirProductoController)
+
 
 // Delete productos del carrito
-router.delete ("/:carritoId/:productId", verificarRol, async (req,res) => {
-    const {carritoId, productId} = req.params;
-    await carrito.deleteProducto (carritoId, productId)
-    const carritoFinal = await carrito.getById(carritoId)
-    res.status(200).json ({
-        message: `Al Carrito con Id Nro ${carritoId} se le ha eliminado el producto con Id Nro. ${productId} `,
-        response: carritoFinal
-    }) 
-})
+router.delete ("/:carritoId/:productId", verificarRol, carritoControler.deleteProductsCarritoController)
 
 router.get("/generarCompra", async(req,res) => {
     const user = req.user.user;

@@ -11,6 +11,7 @@ import cluster from "cluster";
 import { numeroCPUs } from "./routes/api/apiInfo.js";
 import { logger } from "./services/loggers/logger.js";
 import cors from "cors"
+import { productsGraphqlController } from "./controller/products.graphql.controller.js";
 const app = express();
 
 // Variables de entorno
@@ -22,7 +23,7 @@ let MODO = config.MODO
 // ----------------------------------
 // function para levantar el servidor
 // ----------------------------------------
-let serverExpress = app.listen();
+/* let serverExpress = app.listen();
 
 if (MODO === "cluster") {
     if (cluster.isPrimary) {
@@ -38,12 +39,12 @@ if (MODO === "cluster") {
     serverExpress = app.listen (PORT, () => {
         logger.info (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
     })
-}
+} */
 
 
-/* const serverExpress = app.listen (PORT, () => {
+const serverExpress = app.listen (PORT, () => {
     console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
-}) */
+})
 
 // Express Static
 const __filename = fileURLToPath(import.meta.url);
@@ -70,7 +71,7 @@ app.use (session({
 // Configuración de passport
 app.use (passport.initialize()); // Conectar passport con express,
 app.use (passport.session()) // Vincular passport con las sessions de los usuarios
-app.use (cors())
+app.use (cors()) // Permitir conexiones de servidores externos
 // --------------------------------------
 // Motor de plantillas
 // --------------------------------------
@@ -91,6 +92,7 @@ const found = (req,res, next) => {
 }
 
 app.use ("/", found, apiRouter)
+app.use ("/graphql", productsGraphqlController());
 
 // Manejo de errores
 const notfound = (req,res) => {
