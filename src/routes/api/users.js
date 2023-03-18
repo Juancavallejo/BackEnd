@@ -1,5 +1,5 @@
 import express from "express"
-import ContenedorUsersMongo from "../../model/managers/users/classUsersMongo.js";
+import ContenedorUsersMongo from "../../model/managers/users/classUsersMongo.js"
 import {usersModel} from "../../model/dbModels/user.js"
 
 const listaUsers = new ContenedorUsersMongo(usersModel)
