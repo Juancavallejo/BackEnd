@@ -59,7 +59,7 @@ router.get("/generarCompra", async(req,res) => {
         await client.messages.create({
             body:`Pedido en proceso para el usuario de nombre ${user} con email ${email} y a la direccion ${address},esta persona ha comprado los siguientes productos:${allproducts}`,
             from: `whatsapp:+14155238886`, //Emisor del mensaje
-            to:`whatsapp:+573122829659`
+            to:`whatsapp:${phone}`
         }) 
         // Envio de mensaje de texto de confirmación de compra al cliente.
         await client.messages.create({
