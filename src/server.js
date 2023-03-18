@@ -23,7 +23,7 @@ let MODO = config.MODO
 // ----------------------------------
 // function para levantar el servidor
 // ----------------------------------------
-/* let serverExpress = app.listen();
+let serverExpress = app.listen();
 
 if (MODO === "cluster") {
     if (cluster.isPrimary) {
@@ -39,12 +39,12 @@ if (MODO === "cluster") {
     serverExpress = app.listen (PORT, () => {
         logger.info (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
     })
-} */
+}
 
 
-const serverExpress = app.listen (PORT, () => {
+/* const serverExpress = app.listen (PORT, () => {
     console.log (`Server listening on port ${PORT}, modo ${MODO},on process ID ${process.pid}`)
-})
+}) */
 
 // Express Static
 const __filename = fileURLToPath(import.meta.url);

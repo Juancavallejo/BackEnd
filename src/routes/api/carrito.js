@@ -38,6 +38,8 @@ router.post ("/:carritoId/:productId",verificarRol,carritoControler.anadirProduc
 // Delete productos del carrito
 router.delete ("/:carritoId/:productId", verificarRol, carritoControler.deleteProductsCarritoController)
 
+// Logica para generar compra 
+
 router.get("/generarCompra", async(req,res) => {
     const user = req.user.user;
     const email = req.user.username;
